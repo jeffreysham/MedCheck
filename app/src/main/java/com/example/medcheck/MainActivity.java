@@ -1,5 +1,6 @@
 package com.example.medcheck;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -51,29 +52,6 @@ public class MainActivity extends ActionBarActivity {
         String name = preferences.getString("name", "Username Here");
         userGreetingView.setText("Hello, " + name);
 
-        // Already done button
-        Button mainActDoneButton = (Button) findViewById(R.id.mainActDoneButton);
-        mainActDoneButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO: Fix this
-                Intent intent = new Intent(context, CalendarActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        // Not today button
-        Button mainActNotDoneButton = (Button) findViewById(R.id.mainActNotDoneButton);
-        mainActNotDoneButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO: Fix this
-                Intent intent = new Intent(context, CalendarActivity.class);
-                startActivity(intent);
-            }
-        });
-
-
         Task AccutanePills = new Task("Take Accutane", "For Acne", 1);
         List<TaskIndividual> AccutanePillList = new ArrayList<>();
         for (int i=0; i<30; i++) {
@@ -87,7 +65,43 @@ public class MainActivity extends ActionBarActivity {
         mainActTaskName.setText(AccutanePills.getName());
 
         TextView mainActTaskTime = (TextView) findViewById(R.id.mainActTaskTime);
-        //mainActTaskTime.setText("at " + formatTime(AccutanePills.getTaskList().get(3).getDate().get(Calendar.HOUR_OF_DAY), AccutanePills.getTaskList().get(3).getDate().get(Calendar.MINUTE)));
+        mainActTaskTime.setText("at " + formatTime(AccutanePills.getTaskList().get(3).getDate().get(Calendar.HOUR_OF_DAY), AccutanePills.getTaskList().get(3).getDate().get(Calendar.MINUTE)));
+
+        // Already done button
+        Button mainActDoneButton = (Button) findViewById(R.id.mainActDoneButton);
+        mainActDoneButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO: Fix this
+                new AlertDialog.Builder(context).setTitle("Argh").setMessage("Watch out!").setNeutralButton("Close", null).show();
+
+            }
+        });
+
+        // Not today button
+        Button mainActNotDoneButton = (Button) findViewById(R.id.mainActNotDoneButton);
+        mainActNotDoneButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO: Fix this
+                Intent intent = new Intent(context, CalendarActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    public String formatTime(int hours, int minutes) {
+        String hourString = "";
+        String minuteString = "";
+        if (hours < 10) {
+            hourString = "0";
+        }
+        hourString += hours;
+        if (minutes < 10) {
+            minuteString = "0";
+        }
+        minuteString += minutes;
+        return hourString+":"+minuteString;
     }
 
     @Override
