@@ -9,7 +9,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
-import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.app.Activity;
@@ -20,10 +19,10 @@ public class MakeBar extends Activity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        RelativeLayout relative=(RelativeLayout) findViewById(R.id.relative);
+        setContentView(R.layout.activity_bar);
+        RelativeLayout bar =(RelativeLayout) findViewById(R.id.bar);
         BarChart our_chart = new BarChart(this, values);
-        relative.addView(our_chart);
+        bar.addView(our_chart);
 
     }
 
