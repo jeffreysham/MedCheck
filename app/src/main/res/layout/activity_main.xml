@@ -25,26 +25,30 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/calendar"
-            android:src="@drawable/calendar_icon" />
+            android:src="@drawable/calendar_icon"
+            android:backgroundTint="@color/roboto_calendar_blue"/>
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/agenda"
-            android:src="@drawable/clock_icon" />
+            android:src="@drawable/clock_icon"
+            android:backgroundTint="@color/roboto_calendar_blue"/>
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/stats"
             android:src="@drawable/stat_icon"
-            android:onClick="drawBar"/>
+            android:onClick="drawBar"
+            android:backgroundTint="@color/roboto_calendar_blue"/>
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/notes"
-            android:src="@drawable/note_icon"/>
+            android:src="@drawable/note_icon"
+            android:backgroundTint="@color/roboto_calendar_blue"/>
     </LinearLayout>
     <Button
         android:layout_width="wrap_content"
