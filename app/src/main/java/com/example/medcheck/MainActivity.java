@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -44,6 +45,15 @@ public class MainActivity extends ActionBarActivity {
         SharedPreferences preferences = this.getApplicationContext().getSharedPreferences("preferences", Context.MODE_PRIVATE);
         String name = preferences.getString("name", "Username Here");
         userGreetingView.setText("Hello, " + name);
+
+        Button mainActDoneButton = (Button) findViewById(R.id.mainActDoneButton);
+        mainActDoneButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, CalendarActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
