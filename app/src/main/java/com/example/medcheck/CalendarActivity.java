@@ -66,7 +66,7 @@ public class CalendarActivity extends ActionBarActivity implements RobotoCalenda
         tasks.add(temp);
 
         Task temp2 = new Task("RUN!!!!!", "exercise", 0);
-        GregorianCalendar other = new GregorianCalendar(2016, 2, 15);
+        GregorianCalendar other = new GregorianCalendar(2016, 1, 15);
         temp2.getTaskList().add(new TaskIndividual(temp2.getName(), other, 0));
         temp2.getTaskList().add(new TaskIndividual(temp2.getName(), other, 3));
         tasks.add(temp2);
@@ -78,14 +78,11 @@ public class CalendarActivity extends ActionBarActivity implements RobotoCalenda
             Task tempTask = items.get(i);
             List<TaskIndividual> indList = tempTask.getTaskList();
 
-            for (int j = 0; i < indList.size(); i++) {
+            for (int j = 0; j < indList.size(); j++) {
                 TaskIndividual tempIndTask = indList.get(j);
-                Log.i("test", tempIndTask.getName() + " " + tempIndTask.getDate());
-                Log.i("test", currentCalendar.get(Calendar.MONTH) + "");
 
                 if (tempIndTask.getDate().getTime().getMonth() == currentCalendar.getTime().getMonth()) {
                     robotoCalendarView.markFirstUnderlineWithStyle(RobotoCalendarView.BLUE_COLOR, tempIndTask.getDate().getTime());
-                    taskIndividuals.add(tempIndTask);
                 }
             }
         }
@@ -94,6 +91,19 @@ public class CalendarActivity extends ActionBarActivity implements RobotoCalenda
 
     @Override
     public void onDateSelected(Date date) {
+        taskIndividuals = new ArrayList<>();
+        for (int i = 0; i < tasks.size(); i++) {
+            Task tempTask = tasks.get(i);
+            List<TaskIndividual> indList = tempTask.getTaskList();
+
+            for (int j = 0; j < indList.size(); j++) {
+                TaskIndividual tempIndTask = indList.get(j);
+                if (tempIndTask.getDate().getTime().getMonth() == currentCalendar.getTime().getMonth() && tempIndTask.getDate().getTime().getDay() == date.getDay()) {
+                    taskIndividuals.add(tempIndTask);
+                }
+            }
+        }
+
         LayoutInflater li = LayoutInflater.from(this);
         View alertView = li.inflate(R.layout.task_item_alert, null);
         AlertDialog.Builder dateInfoAlert = new AlertDialog.Builder(this);
