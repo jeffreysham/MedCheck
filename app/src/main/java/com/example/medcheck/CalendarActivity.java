@@ -18,6 +18,7 @@ import com.example.medcheck.RobotoCalendarView.RobotoCalendarListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -103,6 +104,8 @@ public class CalendarActivity extends ActionBarActivity implements RobotoCalenda
                 }
             }
         }
+
+        Collections.sort(taskIndividuals);
 
         LayoutInflater li = LayoutInflater.from(this);
         View alertView = li.inflate(R.layout.task_item_alert, null);

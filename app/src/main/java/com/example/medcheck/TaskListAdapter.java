@@ -44,9 +44,24 @@ public class TaskListAdapter extends ArrayAdapter<TaskIndividual> {
         }
         if (rowItem != null) {
             holder.taskNameText.setText(rowItem.getName());
-            holder.taskNameDate.setText(rowItem.getDate().get(Calendar.HOUR_OF_DAY) + " " + rowItem.getDate().get(Calendar.AM_PM));
+            holder.taskNameDate.setText(formatTime(rowItem.getDate().get(Calendar.HOUR_OF_DAY),rowItem.getDate().get(Calendar.MINUTE)));
 
         }
         return convertView;
+    }
+
+    private String formatTime(int hours, int minutes) {
+        String hourString = "";
+        String minuteString = "";
+        if (hours < 10) {
+            hourString = "0";
+        }
+        hourString += hours;
+        if (minutes < 10) {
+            minuteString = "0";
+        }
+        minuteString += minutes;
+        return hourString+":"+minuteString;
+
     }
 }
