@@ -16,7 +16,6 @@
         <activity
             android:name=".CalendarActivity"
             android:label="@string/title_activity_calendar" >
-
         </activity>
         <activity
             android:name=".AgendaActivity"
@@ -27,11 +26,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PieChart"> </activity>
-        <activity android:name=".MakeBar"> </activity>
+        <activity android:name=".PieChart" >
+        </activity>
+        <activity android:name=".MakeBar" >
+        </activity>
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login" >
+        </activity>
+        <activity
+            android:name=".SignUpActivity"
+            android:label="@string/title_activity_sign_up" >
+        </activity>
+        <activity
+            android:name=".DoctorMainActivity"
+            android:label="@string/title_activity_doctor_main" >
         </activity>
     </application>
 

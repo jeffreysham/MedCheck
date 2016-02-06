@@ -6,4 +6,6 @@
     <string name="title_activity_calendar">CalendarActivity</string>
     <string name="title_activity_agenda">AgendaActivity</string>
     <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_sign_up">SignUpActivity</string>
+    <string name="title_activity_doctor_main">DoctorMainActivity</string>
 </resources>

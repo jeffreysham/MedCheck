@@ -1,9 +1,22 @@
 package com.example.medcheck;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import com.firebase.client.AuthData;
+import com.firebase.client.ChildEventListener;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.Query;
 
 
 public class LoginActivity extends ActionBarActivity {
@@ -12,27 +25,76 @@ public class LoginActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-    }
+        final Firebase ref = new Firebase("https://medcheck.firebaseio.com");
+        Button loginButton = (Button) findViewById(R.id.loginButton);
+        final EditText emailText = (EditText) findViewById(R.id.loginEmailText);
+        final EditText passText = (EditText) findViewById(R.id.loginPasswordText);
+        Button signupButton = (Button) findViewById(R.id.loginSignupButton);
+        final Context context = this;
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_login, menu);
-        return true;
-    }
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final String emailString = emailText.getText().toString().trim();
+                String passwordString = passText.getText().toString().trim();
+                ref.authWithPassword(emailString, passwordString, new Firebase.AuthResultHandler() {
+                    @Override
+                    public void onAuthenticated(AuthData authData) {
+                        //System.out.println("User ID: " + authData.getUid() + ", Provider: " + authData.getProvider());
+                        Toast.makeText(context, "Logging In...", Toast.LENGTH_SHORT).show();
+                        //Go to decision screen
+                        Firebase theUserRef = new Firebase("https://medcheck.firebaseio.com/users");
+                        Query query = theUserRef.orderByChild("Email").equalTo(emailString,"Email");
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+                        query.addChildEventListener(new ChildEventListener() {
+                            @Override
+                            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                                boolean isDoctor = (boolean)dataSnapshot.child("isDoctor").getValue();
+                                if (isDoctor) {
+                                    //Go to doctor app
+                                } else {
+                                    //Go to user app
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+                                }
+                            }
 
-        return super.onOptionsItemSelected(item);
+                            @Override
+                            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                            }
+
+                            @Override
+                            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                            }
+
+                            @Override
+                            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                            }
+
+                            @Override
+                            public void onCancelled(FirebaseError firebaseError) {
+
+                            }
+                        });
+                    }
+                    @Override
+                    public void onAuthenticationError(FirebaseError firebaseError) {
+                        // there was an error
+                        Toast.makeText(context, "Error Logging In", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+
+        signupButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, SignUpActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 }

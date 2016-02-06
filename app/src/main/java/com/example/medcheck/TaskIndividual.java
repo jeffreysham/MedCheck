@@ -16,6 +16,12 @@ public class TaskIndividual implements Comparable<TaskIndividual>{
         this.statistic = statistic;
     }
 
+    public TaskIndividual(String name, GregorianCalendar date) {
+        this.name = name;
+        this.date = date;
+        this.statistic = -1;
+    }
+
     public String getName() {
         return name;
     }

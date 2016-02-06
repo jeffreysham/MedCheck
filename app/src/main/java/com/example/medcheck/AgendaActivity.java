@@ -1,5 +1,7 @@
 package com.example.medcheck;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 
@@ -7,6 +9,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
+
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 
@@ -32,6 +37,43 @@ public class AgendaActivity extends ActionBarActivity {
         Collections.sort(taskIndividuals);
         AgendaTaskListAdapter adapter = new AgendaTaskListAdapter(this, R.layout.agenda_task_item, taskIndividuals, tasks);
         listView.setAdapter(adapter);
+        listView.setClickable(true);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                handleItemClick(listView, view, position, id);
+            }
+        });
+    }
+
+    private void handleItemClick(ListView l, View v, int position, long id) {
+        final TaskIndividual taskIndividual = (TaskIndividual) l.getItemAtPosition(position);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setTitle("Enter Task Information")
+                .setMessage("Did you " + taskIndividual.getName() + "?")
+                .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        taskIndividual.setStatistic(1);
+                    }
+                })
+                .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        taskIndividual.setStatistic(0);
+                    }
+                })
+                .setNeutralButton("CANCEL", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        dialog.cancel();
+                    }
+                });
+        alertDialogBuilder.setCancelable(false);
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 
     public void getDates() {

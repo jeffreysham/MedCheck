@@ -2,6 +2,7 @@ package com.example.medcheck;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.CalendarView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -111,10 +113,50 @@ public class CalendarActivity extends ActionBarActivity implements RobotoCalenda
         View alertView = li.inflate(R.layout.task_item_alert, null);
         AlertDialog.Builder dateInfoAlert = new AlertDialog.Builder(this);
         dateInfoAlert.setView(alertView);
-        ListView taskListView = (ListView) alertView.findViewById(R.id.taskList);
+        final ListView taskListView = (ListView) alertView.findViewById(R.id.taskList);
         TaskListAdapter taskListAdapter = new TaskListAdapter(this, R.layout.task_item, taskIndividuals);
         taskListView.setAdapter(taskListAdapter);
+        taskListView.setClickable(true);
+        taskListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                handleItemClick(taskListView, view, position, id);
+            }
+        });
+
+
         dateInfoAlert.create().show();
+
+    }
+
+    private void handleItemClick(ListView l, View v, int position, long id) {
+        final TaskIndividual taskIndividual = (TaskIndividual) l.getItemAtPosition(position);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setTitle("Enter Task Information")
+                .setMessage("Did you " + taskIndividual.getName() + "?")
+                .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        taskIndividual.setStatistic(1);
+                    }
+                })
+                .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        taskIndividual.setStatistic(0);
+
+                    }
+                })
+                .setNeutralButton("CANCEL", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+        alertDialogBuilder.setCancelable(false);
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 
     @Override
