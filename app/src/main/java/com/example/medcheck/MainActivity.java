@@ -29,6 +29,7 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         ImageButton calendarButton = (ImageButton) findViewById(R.id.calendar);
         ImageButton agendaButton = (ImageButton) findViewById(R.id.agenda);
+        ImageButton statButton = (ImageButton) findViewById(R.id.stats);
         final Context context = this;
         calendarButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,6 +43,14 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, AgendaActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        statButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, StatsActivity.class);
                 startActivity(intent);
             }
         });
@@ -95,6 +104,11 @@ public class MainActivity extends ActionBarActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+    }
+
+    public void goStats(View view) {
+        Intent intent = new Intent(this, StatsActivity.class);
+        startActivity(intent);
     }
 
     public void drawPie(View view) {

@@ -14,53 +14,38 @@ public class StatsActivity extends ActionBarActivity {
 
     private GregorianCalendar currentCalendar;
     private ArrayList<Task> tasks;
-    private ArrayList<TaskIndividual> taskIndividuals;
     private ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_agenda);
+        setContentView(R.layout.activity_stat);
 
         currentCalendar = new GregorianCalendar();
         listView = (ListView) findViewById(R.id.agendaTaskList);
 
         tasks = new ArrayList<>();
-        taskIndividuals = new ArrayList<>();
-        getDates();
-        setupDates(tasks);
-        Collections.sort(taskIndividuals);
-        AgendaTaskListAdapter adapter = new AgendaTaskListAdapter(this, R.layout.agenda_task_item, taskIndividuals, tasks);
+        getTasks();
+        StatTaskListAdapter adapter = new StatTaskListAdapter(this, R.layout.stat_task_item, tasks);
         listView.setAdapter(adapter);
     }
 
-    public void getDates() {
-        Task temp = new Task("Eat YOUR PILLS!!!!!", "Medication Counter", 0);
+    public void getTasks() {
+        Task temp = new Task("Shots shots shots, Everybody!", "Medication Counter", 0);
         temp.getTaskList().add(new TaskIndividual(temp.getName(), currentCalendar, 0));
         temp.getTaskList().add(new TaskIndividual(temp.getName(), currentCalendar, 3));
         tasks.add(temp);
 
-        Task temp2 = new Task("RUN!!!!!", "exercise", 0);
+        Task temp2 = new Task("Run as fast as you can.", "exercise", 0);
         GregorianCalendar other = new GregorianCalendar(2016, 1, 15);
         temp2.getTaskList().add(new TaskIndividual(temp2.getName(), other, 0));
         temp2.getTaskList().add(new TaskIndividual(temp2.getName(), other, 3));
         tasks.add(temp2);
-    }
 
-    public void setupDates(ArrayList<Task> items) {
-
-        for (int i = 0; i < items.size(); i++) {
-            Task tempTask = items.get(i);
-            List<TaskIndividual> indList = tempTask.getTaskList();
-
-            for (int j = 0; j < indList.size(); j++) {
-                TaskIndividual tempIndTask = indList.get(j);
-
-                if (tempIndTask.getDate().getTime().getMonth() == currentCalendar.getTime().getMonth()) {
-                    taskIndividuals.add(tempIndTask);
-                }
-            }
-        }
-
+        Task temp3 = new Task("Nope.", "exercise", 0);
+        GregorianCalendar other1 = new GregorianCalendar(2016, 1, 15);
+        temp2.getTaskList().add(new TaskIndividual(temp3.getName(), other1, 0));
+        temp2.getTaskList().add(new TaskIndividual(temp3.getName(), other1, 3));
+        tasks.add(temp3);
     }
 }

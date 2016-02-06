@@ -37,8 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/stats"
-            android:src="@drawable/stat_icon"
-            android:onClick="drawBar"/>
+            android:src="@drawable/stat_icon" />
 
         <ImageButton
             android:layout_width="wrap_content"
