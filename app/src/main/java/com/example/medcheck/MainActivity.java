@@ -15,6 +15,11 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.List;
+
 
 public class MainActivity extends ActionBarActivity {
 
@@ -46,14 +51,43 @@ public class MainActivity extends ActionBarActivity {
         String name = preferences.getString("name", "Username Here");
         userGreetingView.setText("Hello, " + name);
 
+        // Already done button
         Button mainActDoneButton = (Button) findViewById(R.id.mainActDoneButton);
         mainActDoneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // TODO: Fix this
                 Intent intent = new Intent(context, CalendarActivity.class);
                 startActivity(intent);
             }
         });
+
+        // Not today button
+        Button mainActNotDoneButton = (Button) findViewById(R.id.mainActNotDoneButton);
+        mainActNotDoneButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO: Fix this
+                Intent intent = new Intent(context, CalendarActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
+        Task AccutanePills = new Task("Take Accutane", "For Acne", 1);
+        List<TaskIndividual> AccutanePillList = new ArrayList<>();
+        for (int i=0; i<30; i++) {
+            String day = "Day " + Integer.toString(i);
+            TaskIndividual temp = new TaskIndividual(day, new GregorianCalendar(2016, 2, i));
+            AccutanePillList.add(temp);
+        }
+        AccutanePills.setTaskList(AccutanePillList);
+
+        TextView mainActTaskName = (TextView) findViewById(R.id.mainActTaskName);
+        mainActTaskName.setText(AccutanePills.getName());
+
+        TextView mainActTaskTime = (TextView) findViewById(R.id.mainActTaskTime);
+        mainActTaskTime.setText("at " + formatTime(AccutanePills.getTaskList().get(3).getDate().get(Calendar.HOUR_OF_DAY), AccutanePills.getTaskList().get(3).getDate().get(Calendar.MINUTE)));
     }
 
     @Override
