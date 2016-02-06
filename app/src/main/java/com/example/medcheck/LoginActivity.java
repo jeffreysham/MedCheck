@@ -46,16 +46,23 @@ public class LoginActivity extends ActionBarActivity {
                         Toast.makeText(context, "Logging In...", Toast.LENGTH_SHORT).show();
                         //Go to decision screen
                         Firebase theUserRef = new Firebase("https://medcheck.firebaseio.com/users");
-                        Toast.makeText(context, "Email: " + emailString.substring(0,emailString.indexOf(".")), Toast.LENGTH_SHORT).show();
+
                         Query query = theUserRef;
                                 //theUserRef.equalTo(emailString.substring(0,emailString.indexOf(".")));
 
                         query.addChildEventListener(new ChildEventListener() {
                             @Override
                             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                                boolean isDoctor = (boolean)dataSnapshot.child("isDoctor").getValue();
+                                DataSnapshot tempShot = null;
+                                for (DataSnapshot theShot: dataSnapshot.getChildren()) {
+                                    if (theShot.getValue().equals(emailString.substring(0,emailString.indexOf(".")))) {
+                                        tempShot = theShot;
+                                        break;
+                                    }
+                                }
+                                boolean isDoctor = (boolean)tempShot.child("isDoctor").getValue();
                                 SharedPreferences preferences = context.getApplicationContext().getSharedPreferences("preferences", Context.MODE_PRIVATE);
-                                preferences.edit().putString("name", (String)dataSnapshot.child("Name").getValue()).apply();
+                                preferences.edit().putString("name", (String)tempShot.child("Name").getValue()).apply();
                                 preferences.edit().putString("email", emailString.substring(0,emailString.indexOf("."))).apply();
                                 Toast.makeText(context, "Logging In Complete", Toast.LENGTH_SHORT).show();
                                 if (isDoctor) {
@@ -71,20 +78,8 @@ public class LoginActivity extends ActionBarActivity {
 
                             @Override
                             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                                boolean isDoctor = (boolean)dataSnapshot.child("isDoctor").getValue();
-                                SharedPreferences preferences = context.getApplicationContext().getSharedPreferences("preferences", Context.MODE_PRIVATE);
-                                preferences.edit().putString("name", (String)dataSnapshot.child("Name").getValue()).apply();
-                                preferences.edit().putString("email", emailString.substring(0,emailString.indexOf("."))).apply();
-                                Toast.makeText(context, "Logging In Complete", Toast.LENGTH_SHORT).show();
-                                if (isDoctor) {
-                                    //Go to doctor app
-                                    Intent intent = new Intent(context, DoctorMainActivity.class);
-                                    startActivity(intent);
-                                } else {
-                                    //Go to user app
-                                    Intent intent = new Intent(context, MainActivity.class);
-                                    startActivity(intent);
-                                }                            }
+
+                            }
 
                             @Override
                             public void onChildRemoved(DataSnapshot dataSnapshot) {
@@ -93,20 +88,7 @@ public class LoginActivity extends ActionBarActivity {
 
                             @Override
                             public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-                                boolean isDoctor = (boolean)dataSnapshot.child("isDoctor").getValue();
-                                SharedPreferences preferences = context.getApplicationContext().getSharedPreferences("preferences", Context.MODE_PRIVATE);
-                                preferences.edit().putString("name", (String)dataSnapshot.child("Name").getValue()).apply();
-                                preferences.edit().putString("email", emailString.substring(0,emailString.indexOf("."))).apply();
-                                Toast.makeText(context, "Logging In Complete", Toast.LENGTH_SHORT).show();
-                                if (isDoctor) {
-                                    //Go to doctor app
-                                    Intent intent = new Intent(context, DoctorMainActivity.class);
-                                    startActivity(intent);
-                                } else {
-                                    //Go to user app
-                                    Intent intent = new Intent(context, MainActivity.class);
-                                    startActivity(intent);
-                                }
+
                             }
 
                             @Override

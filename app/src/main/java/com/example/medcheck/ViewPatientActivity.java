@@ -1,38 +1,133 @@
 package com.example.medcheck;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ListView;
+
+import com.firebase.client.ChildEventListener;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+
+import java.util.ArrayList;
+import java.util.GregorianCalendar;
 
 
 public class ViewPatientActivity extends ActionBarActivity {
+
+    private ArrayList<Task> tasks;
+    private GregorianCalendar currentCalendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_patient);
+
+        currentCalendar = new GregorianCalendar();
+
+        Firebase.setAndroidContext(this);
+        final Firebase ref = new Firebase("https://medcheck.firebaseio.com");
+
+        ImageButton addTaskButton = (ImageButton) findViewById(R.id.addTask);
+        ImageButton addNoteButton = (ImageButton) findViewById(R.id.addNote);
+        final Context context = this;
+        ListView listView = (ListView) findViewById(R.id.doctorViewTasksList);
+
+        addTaskButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LayoutInflater li = LayoutInflater.from(context);
+                View alertView = li.inflate(R.layout.task_prompt, null);
+                AlertDialog.Builder alert = new AlertDialog.Builder(context);
+                alert.setView(alertView);
+                final EditText nameInput = (EditText) alertView.findViewById(R.id.nameInput);
+                final EditText descInput = (EditText) alertView.findViewById(R.id.descInput);
+                final EditText monthInput = (EditText) alertView.findViewById(R.id.monthInput);
+                final EditText dayInput = (EditText) alertView.findViewById(R.id.dayInput);
+                final EditText yearInput = (EditText) alertView.findViewById(R.id.yearInput);
+
+                alert.setCancelable(false)
+                        .setPositiveButton("OK",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        //TODO: add to firebase
+                                        Task newTask = new Task(nameInput.getText().toString().trim(), descInput.getText().toString().trim(),0);
+                                        TaskIndividual newTaskIndiv = new TaskIndividual(nameInput.getText().toString().trim(),
+                                                new GregorianCalendar(Integer.parseInt(yearInput.getText().toString().trim()),Integer.parseInt(monthInput.getText().toString().trim())-1,Integer.parseInt(dayInput.getText().toString().trim())));
+                                        newTask.getTaskList().add(newTaskIndiv);
+                                        Firebase newUserRef = ref.child("tasks").child(nameInput.getText().toString().trim());
+                                        newUserRef.setValue(newTask);
+
+                                        dialog.dismiss();
+                                    }
+                                })
+                        .setNegativeButton("Cancel",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.cancel();
+                                    }
+                                });
+                alert.create().show();
+            }
+        });
+
+        getTasks();
+        StatTaskListAdapter adapter = new StatTaskListAdapter(this, R.layout.stat_task_item, tasks);
+        listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position,
+                                    long id) {
+
+                Intent intent = new Intent(context, MakeBar.class);
+                startActivity(intent);
+
+            }
+        });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_view_patient, menu);
-        return true;
+    public void getTasks() {
+        final Firebase ref = new Firebase("https://medcheck.firebaseio.com/tasks");
+        ref.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 }
