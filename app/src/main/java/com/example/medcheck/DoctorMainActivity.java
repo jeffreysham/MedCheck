@@ -27,7 +27,8 @@ import java.util.ArrayList;
 public class DoctorMainActivity extends ActionBarActivity {
 
     ArrayList<String> patientsList;
-
+    ListView patientListView;
+    Context context = this;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,18 +40,10 @@ public class DoctorMainActivity extends ActionBarActivity {
         String email = preferences.getString("email", "Email Here");
         userGreetingView.setText("Hello, " + name);
 
-        ListView patientListView = (ListView) findViewById(R.id.patientList);
+        patientListView = (ListView) findViewById(R.id.patientList);
         patientsList = new ArrayList<>();
         getPatients(email);
-        ListAdapter adapter = new ArrayAdapter<>(this, R.layout.patient_item, patientsList);
-        patientListView.setAdapter(adapter);
-        patientListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                patientsList.get(position);
-                //Go to view patients activity
-            }
-        });
+
     }
 
     private void getPatients(String email) {
@@ -64,6 +57,15 @@ public class DoctorMainActivity extends ActionBarActivity {
                         String patientName = (String)userSnapShot.child("Name").getValue();
                         patientsList.add(patientName);
                     }
+                    ListAdapter adapter = new ArrayAdapter<String>(context, R.layout.patient_item, patientsList);
+                    patientListView.setAdapter(adapter);
+                    patientListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            patientsList.get(position);
+                            //Go to view patients activity
+                        }
+                    });
                 }
             }
 

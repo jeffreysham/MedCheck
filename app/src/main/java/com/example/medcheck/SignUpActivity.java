@@ -1,6 +1,7 @@
 package com.example.medcheck;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -63,11 +64,15 @@ public class SignUpActivity extends ActionBarActivity {
                                 //Go to decision screen
                                 SharedPreferences preferences = context.getApplicationContext().getSharedPreferences("preferences", Context.MODE_PRIVATE);
                                 preferences.edit().putString("name", nameText.getText().toString().trim()).apply();
-                                preferences.edit().putString("email", emailString).apply();
+                                preferences.edit().putString("email", emailString.substring(0,emailString.indexOf("."))).apply();
                                 if (checkBox.isChecked()) {
                                     //Go to doctor app
+                                    Intent intent = new Intent(context, DoctorMainActivity.class);
+                                    startActivity(intent);
                                 } else {
                                     //Go to patient app
+                                    Intent intent = new Intent(context, MainActivity.class);
+                                    startActivity(intent);
                                 }
                             }
 
