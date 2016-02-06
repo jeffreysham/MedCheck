@@ -2,6 +2,7 @@ package com.example.medcheck;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
@@ -71,7 +72,7 @@ public class MainActivity extends ActionBarActivity {
         List<TaskIndividual> AccutanePillList = new ArrayList<>();
         for (int i=0; i<30; i++) {
             String day = "Day " + Integer.toString(i);
-            TaskIndividual temp = new TaskIndividual(day, new GregorianCalendar(2016, 2, i));
+            TaskIndividual temp = new TaskIndividual(day, new GregorianCalendar(2016,2,i,1,30));
             AccutanePillList.add(temp);
         }
         AccutanePills.setTaskList(AccutanePillList);
@@ -87,9 +88,14 @@ public class MainActivity extends ActionBarActivity {
         mainActDoneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: Fix this
-                new AlertDialog.Builder(context).setTitle("Argh").setMessage("Watch out!").setNeutralButton("Close", null).show();
-
+                new AlertDialog.Builder(context).setTitle("Warning").setMessage("Are you sure?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, Task AccutanePills) {
+                                // if yes, adjust statistic for the day. currently only day 15 of current month
+                                AccutanePills.getTaskList().get(15).setStatistic(1);
+                            }
+                        })
+                        .setNegativeButton("Cancel", null);
             }
         });
 
@@ -116,7 +122,7 @@ public class MainActivity extends ActionBarActivity {
             minuteString = "0";
         }
         minuteString += minutes;
-        return hourString+":"+minuteString;
+        return hourString + ":" + minuteString;
     }
 
     @Override

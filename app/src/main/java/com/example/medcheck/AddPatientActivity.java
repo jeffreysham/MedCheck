@@ -47,8 +47,8 @@ public class AddPatientActivity extends ActionBarActivity {
 
         Firebase.setAndroidContext(this);
         final Firebase theUserRef = new Firebase("https://medcheck.firebaseio.com/users");
-        Query query = theUserRef.orderByChild("Email");
-        query.addChildEventListener(new ChildEventListener() {
+
+        theUserRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 if (dataSnapshot.getChildrenCount() > 0) {

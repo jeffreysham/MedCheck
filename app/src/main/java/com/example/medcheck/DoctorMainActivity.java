@@ -46,16 +46,18 @@ public class DoctorMainActivity extends ActionBarActivity {
 
     }
 
-    private void getPatients(String email) {
+    private void getPatients(final String email) {
         Firebase theUserRef = new Firebase("https://medcheck.firebaseio.com/users");
-        Query query = theUserRef.orderByChild("Email").equalTo(email,"Doctor Email");
-        query.addChildEventListener(new ChildEventListener() {
+
+        theUserRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 if (dataSnapshot.getChildrenCount() > 0) {
                     for (DataSnapshot userSnapShot: dataSnapshot.getChildren()) {
-                        String patientName = (String)userSnapShot.child("Name").getValue();
-                        patientsList.add(patientName);
+                        if (userSnapShot.child("Doctor Email").getValue().equals(email)){
+                            String patientName = (String)userSnapShot.child("Name").getValue();
+                            patientsList.add(patientName);
+                        }
                     }
                     ListAdapter adapter = new ArrayAdapter<String>(context, R.layout.patient_item, patientsList);
                     patientListView.setAdapter(adapter);
