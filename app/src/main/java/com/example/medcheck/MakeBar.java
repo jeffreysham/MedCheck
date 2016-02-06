@@ -6,6 +6,7 @@ package com.example.medcheck;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.AttributeSet;
@@ -15,12 +16,13 @@ import android.app.Activity;
 import android.widget.RelativeLayout;
 
 public class MakeBar extends Activity {
+    float values[]={1, 2, 3};
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         RelativeLayout relative=(RelativeLayout) findViewById(R.id.relative);
-        BarChart our_chart = new BarChart(this);
+        BarChart our_chart = new BarChart(this, values);
         our_chart.setCost(50);
         our_chart.setEarnings(50);
         relative.addView(our_chart);
@@ -30,16 +32,26 @@ public class MakeBar extends Activity {
     public class BarChart extends View {
         Paint textPaint;
         Paint linePaint;
-        Paint boxPaint1;
-        Paint boxPaint2;
-        Paint textPaint1;
-        Paint textPaint2;
+        Paint boxPaint[];
+        Paint textPaintBox[];
+        int values_size;
         double cost;
         double earnings;
         float scaleFactor;
 
-        public BarChart(Context context) {
+        public BarChart(Context context, float[] values) {
             super(context);
+
+            int r = 85;
+            int g = 198;
+            int b = 218;
+
+            int step = (255 - 218)/values.length;
+
+            values_size = values.length;
+            textPaintBox = new Paint[values.length];
+            boxPaint = new Paint[values.length];
+
             initialise();
         }
 
@@ -60,20 +72,43 @@ public class MakeBar extends Activity {
 
             textPaint = new Paint();
             linePaint = new Paint();
-            boxPaint1 = new Paint();
-            boxPaint2 = new Paint();
-            textPaint1 = new Paint();
-            textPaint2 = new Paint();
+
             linePaint.setStrokeWidth(1);
             linePaint.setColor(0xFFC5C5C5);
             textPaint.setColor(0xFFC5C5C5);
             textPaint.setTextSize(14 * scaleFactor);
-            boxPaint1.setColor(0xFF55C6DA);
-            boxPaint2.setColor(0xFF2D9EB2);
-            textPaint1.setColor(0xFF55C6DA);
-            textPaint2.setColor(0xFF2D9EB2);
-            textPaint1.setTextSize(14 * scaleFactor);
-            textPaint2.setTextSize(14 * scaleFactor);
+
+            for(int i=0;i<values.length;i++)
+            {
+                textPaintBox[i].setColor(0xFF2D9EB2);
+                boxPaint[i].setColor(0xFF55C6DA);
+                //r = r + step;
+                //g = g + step;
+                //b = b + step;
+                textPaintBox[i].setTextSize(14 * scaleFactor);
+            }
+/*
+            for (int i=0; i < values_size; i++)
+            {
+                textPaint = new Paint();
+                linePaint = new Paint();
+                boxPaint1 = new Paint();
+                boxPaint2 = new Paint();
+                textPaint1 = new Paint();
+                textPaint2 = new Paint();
+                linePaint.setStrokeWidth(1);
+                linePaint.setColor(0xFFC5C5C5);
+                textPaint.setColor(0xFFC5C5C5);
+                textPaint.setTextSize(14 * scaleFactor);
+                boxPaint1.setColor(0xFF55C6DA);
+                boxPaint2.setColor(0xFF2D9EB2);
+                textPaint1.setColor(0xFF55C6DA);
+                textPaint2.setColor(0xFF2D9EB2);
+                textPaint1.setTextSize(14 * scaleFactor);
+                textPaint2.setTextSize(14 * scaleFactor);
+
+            }
+            */
 
         }
 
@@ -92,14 +127,26 @@ public class MakeBar extends Activity {
         }
 
         protected void onDraw(Canvas canvas) {
-            super.onDraw(canvas);
+            /*super.onDraw(canvas);
             int fullWidth = getWidth();
             int fullHeight = getHeight();
             int padding = (int) (10 * scaleFactor);
             int maxBarHeight = fullHeight - 5 * padding;
-            float bar1height;
-            float bar2height;
+            float barheight[];
+            float max_height = 0;
 
+            for(int i = 0; i < values_size; i++)
+            {
+                if (values[i] > max_height)
+                {
+                    max_height = values[i];
+                }
+            }
+
+            for(int i = 0; i < values_size; i++)
+            {
+                barheight[i] = (float) ((values[i]/max_height)*maxBarHeight);
+            }
             if (earnings > cost) {
                 bar2height = (float) maxBarHeight;
                 bar1height = (float) (cost / earnings * maxBarHeight);
@@ -126,7 +173,7 @@ public class MakeBar extends Activity {
             float val2pos = bar2top - padding;
             canvas.drawRect(middle + padding, bar2top, fullWidth - padding * 2, bar2bottom, boxPaint2);
             canvas.drawText("Last Week", threequarter - padding * 3, fullHeight - padding, textPaint2);
-            canvas.drawText("" + earnings + "%", threequarter - padding * 2, val2pos, textPaint);
+            canvas.drawText("" + earnings + "%", threequarter - padding * 2, val2pos, textPaint);*/
         }
 
     }

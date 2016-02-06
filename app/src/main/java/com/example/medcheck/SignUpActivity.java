@@ -1,6 +1,7 @@
 package com.example.medcheck;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -24,6 +25,7 @@ public class SignUpActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+        Firebase.setAndroidContext(this);
         final Firebase ref = new Firebase("https://medcheck.firebaseio.com");
         Button signupButton = (Button) findViewById(R.id.signupButton);
         final EditText nameText = (EditText) findViewById(R.id.signupNameText);
@@ -59,6 +61,9 @@ public class SignUpActivity extends ActionBarActivity {
                                 //System.out.println("User ID: " + authData.getUid() + ", Provider: " + authData.getProvider());
                                 Toast.makeText(context, "Logging In...", Toast.LENGTH_SHORT).show();
                                 //Go to decision screen
+                                SharedPreferences preferences = context.getApplicationContext().getSharedPreferences("preferences", Context.MODE_PRIVATE);
+                                preferences.edit().putString("name", nameText.getText().toString().trim()).apply();
+                                preferences.edit().putString("email", emailString).apply();
                                 if (checkBox.isChecked()) {
                                     //Go to doctor app
                                 } else {

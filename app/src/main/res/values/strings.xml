@@ -8,4 +8,6 @@
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_sign_up">SignUpActivity</string>
     <string name="title_activity_doctor_main">DoctorMainActivity</string>
+    <string name="title_activity_add_patient">AddPatientActivity</string>
+    <string name="title_activity_view_patient">ViewPatientActivity</string>
 </resources>

@@ -1,5 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:id="@+id/relative"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
@@ -10,7 +11,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Hello, USERNAME"
-        android:id="@+id/textView4"
+        android:id="@+id/userGreetingText"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
@@ -25,41 +26,46 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/calendar"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@drawable/calendar_icon" />
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/agenda"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@drawable/clock_icon" />
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/stats"
-            android:src="@mipmap/ic_launcher"/>
+            android:src="@drawable/stat_icon"
+            android:onClick="drawBar"/>
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/notes"
-            android:src="@mipmap/ic_launcher"/>
+            android:src="@drawable/note_icon"/>
     </LinearLayout>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Already done!"
-        android:id="@+id/button"
+        android:id="@+id/mainActDoneButton"
+        android:textColor="#FFFFFF"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:background="@drawable/buttonshape" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Not today!"
-        android:id="@+id/button2"
+        android:text="Not today"
+        android:id="@+id/mainActNotDoneButton"
+        android:textColor="#FFFFFF"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/buttonshape2" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -75,7 +81,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="ENTER TASK NAME HERE!"
-        android:id="@+id/textView2"
+        android:id="@+id/mainActTaskName"
         android:layout_below="@+id/textView"
         android:layout_centerHorizontal="true" />
 
@@ -84,8 +90,8 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="TIME"
-        android:id="@+id/textView3"
-        android:layout_below="@+id/textView2"
+        android:id="@+id/mainActTaskTime"
+        android:layout_below="@+id/mainActTaskName"
         android:layout_centerHorizontal="true" />
 
 

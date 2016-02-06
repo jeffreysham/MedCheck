@@ -1,17 +1,92 @@
 package com.example.medcheck;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.database.DataSetObserver;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import com.firebase.client.ChildEventListener;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.Query;
+
+import java.util.ArrayList;
 
 
 public class DoctorMainActivity extends ActionBarActivity {
+
+    ArrayList<String> patientsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_main);
+        Firebase.setAndroidContext(this);
+        TextView userGreetingView = (TextView) findViewById(R.id.doctorGreetingText);
+        SharedPreferences preferences = this.getApplicationContext().getSharedPreferences("preferences", Context.MODE_PRIVATE);
+        String name = preferences.getString("name", "Username Here");
+        String email = preferences.getString("email", "Email Here");
+        userGreetingView.setText("Hello, " + name);
+
+        ListView patientListView = (ListView) findViewById(R.id.patientList);
+        patientsList = new ArrayList<>();
+        getPatients(email);
+        ListAdapter adapter = new ArrayAdapter<>(this, R.layout.patient_item, patientsList);
+        patientListView.setAdapter(adapter);
+        patientListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                patientsList.get(position);
+                //Go to view patients activity
+            }
+        });
+    }
+
+    private void getPatients(String email) {
+        Firebase theUserRef = new Firebase("https://medcheck.firebaseio.com/users");
+        Query query = theUserRef.orderByChild("Email").equalTo(email,"Doctor Email");
+        query.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                if (dataSnapshot.getChildrenCount() > 0) {
+                    for (DataSnapshot userSnapShot: dataSnapshot.getChildren()) {
+                        String patientName = (String)userSnapShot.child("Name").getValue();
+                        patientsList.add(patientName);
+                    }
+                }
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
     }
 
     @Override

@@ -107,25 +107,27 @@ public class CalendarActivity extends ActionBarActivity implements RobotoCalenda
             }
         }
 
-        Collections.sort(taskIndividuals);
+        if (taskIndividuals.size() > 0) {
+            Collections.sort(taskIndividuals);
 
-        LayoutInflater li = LayoutInflater.from(this);
-        View alertView = li.inflate(R.layout.task_item_alert, null);
-        AlertDialog.Builder dateInfoAlert = new AlertDialog.Builder(this);
-        dateInfoAlert.setView(alertView);
-        final ListView taskListView = (ListView) alertView.findViewById(R.id.taskList);
-        TaskListAdapter taskListAdapter = new TaskListAdapter(this, R.layout.task_item, taskIndividuals);
-        taskListView.setAdapter(taskListAdapter);
-        taskListView.setClickable(true);
-        taskListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                handleItemClick(taskListView, view, position, id);
-            }
-        });
+            LayoutInflater li = LayoutInflater.from(this);
+            View alertView = li.inflate(R.layout.task_item_alert, null);
+            AlertDialog.Builder dateInfoAlert = new AlertDialog.Builder(this);
+            dateInfoAlert.setView(alertView);
+            final ListView taskListView = (ListView) alertView.findViewById(R.id.taskList);
+            TaskListAdapter taskListAdapter = new TaskListAdapter(this, R.layout.task_item, taskIndividuals);
+            taskListView.setAdapter(taskListAdapter);
+            taskListView.setClickable(true);
+            taskListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    handleItemClick(taskListView, view, position, id);
+                }
+            });
 
 
-        dateInfoAlert.create().show();
+            dateInfoAlert.create().show();
+        }
 
     }
 

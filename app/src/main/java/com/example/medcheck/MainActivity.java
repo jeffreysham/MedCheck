@@ -1,6 +1,8 @@
 package com.example.medcheck;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
@@ -9,6 +11,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -17,7 +21,29 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ImageButton calendarButton = (ImageButton) findViewById(R.id.calendar);
+        ImageButton agendaButton = (ImageButton) findViewById(R.id.agenda);
+        final Context context = this;
+        calendarButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, CalendarActivity.class);
+                startActivity(intent);
+            }
+        });
 
+        agendaButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, AgendaActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        TextView userGreetingView = (TextView) findViewById(R.id.userGreetingText);
+        SharedPreferences preferences = this.getApplicationContext().getSharedPreferences("preferences", Context.MODE_PRIVATE);
+        String name = preferences.getString("name", "Username Here");
+        userGreetingView.setText("Hello, " + name);
     }
 
     @Override
