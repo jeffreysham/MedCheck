@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.RelativeLayout;
 
@@ -45,7 +46,8 @@ public class PieChart extends Activity {
         private Paint paint=new Paint(Paint.ANTI_ALIAS_FLAG);
         private float[] value_degree;
         private int[] COLORS;
-        RectF rectf = new RectF (50, 50, 500, 500);
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        float scaleFactor = metrics.density;
         int temp=0;
         public MyGraphview(Context context, float[] values) {
 
@@ -69,8 +71,19 @@ public class PieChart extends Activity {
         }
         @Override
         protected void onDraw(Canvas canvas) {
-            // TODO Auto-generated method stub
             super.onDraw(canvas);
+            float fullWidth = getWidth();
+            float fullHeight = getHeight();
+            int padding = (int) (10 * scaleFactor);
+            float diameter;
+            if (fullWidth < fullHeight){
+                diameter = fullWidth;
+            } else {
+                diameter = fullHeight;
+            }
+            float ceiling = padding + ((fullHeight - 2*padding)/2) - ((diameter - (padding*2))/2);
+            //float wall = padding + ((fullWidth - 2*padding)/2) - ((diameter - (padding*2))/2);
+            RectF rectf = new RectF (padding, padding + ceiling, diameter - padding, diameter - padding + ceiling);
 
             for (int i = 0; i < value_degree.length; i++) {//values2.length; i++) {
                 if (i == 0) {

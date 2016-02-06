@@ -13,7 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 
-public class StatsActivity extends ActionBarActivity {
+public class NoteActivity extends ActionBarActivity {
 
     private GregorianCalendar currentCalendar;
     private ArrayList<Task> tasks;
@@ -23,7 +23,7 @@ public class StatsActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         final Context context = this;
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_stat);
+        setContentView(R.layout.activity_note);
 
         currentCalendar = new GregorianCalendar();
         listView = (ListView) findViewById(R.id.agendaTaskList);
@@ -38,7 +38,7 @@ public class StatsActivity extends ActionBarActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position,
                                     long id) {
 
-                Intent intent = new Intent(context, PieChart.class);
+                Intent intent = new Intent(context, BarGraph.class);
                 startActivity(intent);
 
             }

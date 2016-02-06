@@ -14,7 +14,7 @@ import android.view.View;
 import android.app.Activity;
 import android.widget.RelativeLayout;
 
-public class MakeBar extends Activity {
+public class BarGraph extends Activity {
     float values[]={1, 2, 3, 2, 12, 5};
 
     public void onCreate(Bundle savedInstanceState) {
@@ -93,7 +93,7 @@ public class MakeBar extends Activity {
             int fullWidth = getWidth();
             int fullHeight = getHeight();
             int padding = (int) (10 * scaleFactor);
-            int maxBarHeight = fullHeight - 5 * padding;
+            int maxBarHeight = fullHeight - 10 * padding;
             float bar_height [] = new float[boxPaint.length];
             float max_height = 0;
 
@@ -119,9 +119,9 @@ public class MakeBar extends Activity {
                 float barbottom = fullHeight - padding * 3;
                 float bartop = barbottom - bar_height[i];
                 float valpos = fullHeight;
-                canvas.drawRect((1f / boxPaint.length) * i * fullWidth - padding, bartop, (1f / boxPaint.length) * (i + 1) * fullWidth - padding, barbottom, boxPaint[i]);
-                canvas.drawText("Week " + (i + 1), (1f/boxPaint.length)*i*fullWidth + 25f/boxPaint.length, valpos, textPaintBox[i]);
-                canvas.drawText("Week " + (i + 1), (1f/boxPaint.length)*i*fullWidth + 25f/boxPaint.length, valpos, textPaintBox[i]);
+                canvas.drawRect((1f / boxPaint.length) * i * fullWidth + padding, bartop, (1f / boxPaint.length) * (i + 1) * fullWidth - padding, barbottom, boxPaint[i]);
+                canvas.drawText("Week " + (i + 1), (1f/boxPaint.length)*i*fullWidth + 25f/boxPaint.length + padding, valpos, textPaintBox[i]);
+                canvas.drawText("Week " + (i + 1), (1f/boxPaint.length)*i*fullWidth + 25f/boxPaint.length + padding, valpos, textPaintBox[i]);
             }
 
         }

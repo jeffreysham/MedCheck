@@ -4,9 +4,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.RectF;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -31,6 +28,7 @@ public class MainActivity extends ActionBarActivity {
         ImageButton calendarButton = (ImageButton) findViewById(R.id.calendar);
         ImageButton agendaButton = (ImageButton) findViewById(R.id.agenda);
         ImageButton statButton = (ImageButton) findViewById(R.id.stats);
+        ImageButton noteButton = (ImageButton) findViewById(R.id.notes);
         final Context context = this;
         calendarButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,6 +50,14 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, StatsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        noteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, NoteActivity.class);
                 startActivity(intent);
             }
         });
@@ -131,7 +137,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void drawBar(View view) {
-        Intent intent = new Intent(this, MakeBar.class);
+        Intent intent = new Intent(this, BarGraph.class);
         startActivity(intent);
     }
 
