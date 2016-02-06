@@ -16,7 +16,7 @@ import android.widget.RelativeLayout;
  */
 public class PieChart extends Activity {
     /** Called when the activity is first created. */
-    float values[]={1, 2};
+    float values[]={1, 2, 2, 4};
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,7 +36,7 @@ public class PieChart extends Activity {
         }
         for(int i=0;i<data.length;i++)
         {
-            data[i]=360*(data[i]/total);
+            data[i]=360* (data[i]/total);
         }
         return data;
 
