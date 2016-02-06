@@ -1,9 +1,14 @@
 package com.example.medcheck;
 
+import android.content.Intent;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.RectF;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -19,6 +24,16 @@ public class MainActivity extends ActionBarActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+    }
+
+    public void drawPie(View view) {
+        Intent intent = new Intent(this, PieChart.class);
+        startActivity(intent);
+    }
+
+    public void drawBar(View view) {
+        Intent intent = new Intent(this, MakeBar.class);
+        startActivity(intent);
     }
 
     @Override
