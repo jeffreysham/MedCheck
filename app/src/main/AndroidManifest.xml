@@ -23,6 +23,10 @@
             android:name=".AgendaActivity"
             android:label="@string/title_activity_agenda" >
         </activity>
+        <activity
+            android:name=".StatsActivity"
+            android:label="@string/title_activity_agenda" >
+        </activity>
         <activity android:name=".PieChart" >
         </activity>
         <activity android:name=".MakeBar" >
