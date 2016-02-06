@@ -87,7 +87,7 @@ public class MainActivity extends ActionBarActivity {
         mainActTaskName.setText(AccutanePills.getName());
 
         TextView mainActTaskTime = (TextView) findViewById(R.id.mainActTaskTime);
-        mainActTaskTime.setText("at " + formatTime(AccutanePills.getTaskList().get(3).getDate().get(Calendar.HOUR_OF_DAY), AccutanePills.getTaskList().get(3).getDate().get(Calendar.MINUTE)));
+        //mainActTaskTime.setText("at " + formatTime(AccutanePills.getTaskList().get(3).getDate().get(Calendar.HOUR_OF_DAY), AccutanePills.getTaskList().get(3).getDate().get(Calendar.MINUTE)));
     }
 
     @Override

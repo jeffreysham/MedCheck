@@ -8,7 +8,6 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 /**
@@ -16,15 +15,15 @@ import android.widget.RelativeLayout;
  */
 public class PieChart extends Activity {
     /** Called when the activity is first created. */
-    float values[]={1, 2};
+    float values[]={1, 2, 2, 4};
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        RelativeLayout relative=(RelativeLayout) findViewById(R.id.relative);
+        setContentView(R.layout.activity_pie);
+        RelativeLayout pie=(RelativeLayout) findViewById(R.id.pie);
         values=calculateData(values);
-        relative.addView(new MyGraphview(this,values));
+        pie.addView(new MyGraphview(this,values));
 
     }
     private float[] calculateData(float[] data) {
@@ -36,7 +35,7 @@ public class PieChart extends Activity {
         }
         for(int i=0;i<data.length;i++)
         {
-            data[i]=360*(data[i]/total);
+            data[i]=360* (data[i]/total);
         }
         return data;
 
