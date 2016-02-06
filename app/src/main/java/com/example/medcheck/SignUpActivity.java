@@ -45,7 +45,7 @@ public class SignUpActivity extends ActionBarActivity {
                     public void onSuccess(Map<String, Object> result) {
                         //System.out.println("Successfully created user account with uid: " + result.get("uid"));
                         Toast.makeText(context, "Signed Up Successful", Toast.LENGTH_SHORT).show();
-                        Firebase newUserRef = ref.child("users").child(emailString);
+                        Firebase newUserRef = ref.child("users").child(emailString.substring(0,emailString.indexOf(".")));
 
                         newUserRef.child("Name").setValue(nameText.getText().toString().trim());
 
