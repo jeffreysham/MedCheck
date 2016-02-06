@@ -1,5 +1,7 @@
 package com.example.medcheck;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 
@@ -7,6 +9,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
+
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 
@@ -18,6 +23,7 @@ public class StatsActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        final Context context = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stat);
 
@@ -28,6 +34,18 @@ public class StatsActivity extends ActionBarActivity {
         getTasks();
         StatTaskListAdapter adapter = new StatTaskListAdapter(this, R.layout.stat_task_item, tasks);
         listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position,
+                                    long id) {
+
+                Intent intent = new Intent(context, MakeBar.class);
+                startActivity(intent);
+
+            }
+        });
+
     }
 
     public void getTasks() {
