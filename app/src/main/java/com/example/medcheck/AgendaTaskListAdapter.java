@@ -27,8 +27,9 @@ public class AgendaTaskListAdapter extends ArrayAdapter<TaskIndividual> {
     }
 
     private class TaskViewHolder {
-        TextView taskNameText;
         TextView taskNameDate;
+        TextView taskNameText;
+        TextView taskNameTime;
         TextView taskNameDesc;
     }
 
@@ -39,16 +40,18 @@ public class AgendaTaskListAdapter extends ArrayAdapter<TaskIndividual> {
         if (convertView == null) {
             convertView = rowViewInflater.inflate(R.layout.agenda_task_item, null);
             holder = new TaskViewHolder();
+            holder.taskNameDate = (TextView) convertView.findViewById(R.id.taskDate);
             holder.taskNameText = (TextView) convertView.findViewById(R.id.taskName);
-            holder.taskNameDate = (TextView) convertView.findViewById(R.id.taskTime);
+            holder.taskNameTime = (TextView) convertView.findViewById(R.id.taskTime);
             holder.taskNameDesc = (TextView) convertView.findViewById(R.id.taskDesc);
             convertView.setTag(holder);
         } else {
             holder = (TaskViewHolder) convertView.getTag();
         }
         if (rowItem != null) {
+            holder.taskNameDate.setText(getMonthString(rowItem.getDate().get(Calendar.MONTH)) + " " + rowItem.getDate().get(Calendar.DAY_OF_MONTH) + "");
             holder.taskNameText.setText(rowItem.getName());
-            holder.taskNameDate.setText(rowItem.getDate().get(Calendar.HOUR_OF_DAY) + " " + rowItem.getDate().get(Calendar.AM_PM));
+            holder.taskNameTime.setText(formatTime(rowItem.getDate().get(Calendar.HOUR_OF_DAY),rowItem.getDate().get(Calendar.MINUTE)));;
             holder.taskNameDesc.setText(getDesc(rowItem));
         }
         return convertView;
@@ -62,5 +65,51 @@ public class AgendaTaskListAdapter extends ArrayAdapter<TaskIndividual> {
             }
         }
         return "";
+    }
+
+    private String getMonthString(int month) {
+        switch (month) {
+            case 0:
+                return "January";
+            case 1:
+                return "February";
+            case 2:
+                return "March";
+            case 3:
+                return "April";
+            case 4:
+                return "May";
+            case 5:
+                return "June";
+            case 6:
+                return "July";
+            case 7:
+                return "August";
+            case 8:
+                return "September";
+            case 9:
+                return "October";
+            case 10:
+                return "November";
+            case 11:
+                return "December";
+            default:
+                return "";
+        }
+    }
+
+    private String formatTime(int hours, int minutes) {
+        String hourString = "";
+        String minuteString = "";
+        if (hours < 10) {
+            hourString = "0";
+        }
+        hourString += hours;
+        if (minutes < 10) {
+            minuteString = "0";
+        }
+        minuteString += minutes;
+        return hourString+":"+minuteString;
+
     }
 }

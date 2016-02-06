@@ -2,10 +2,9 @@ package com.example.medcheck;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
 import android.widget.ListView;
@@ -25,13 +24,14 @@ public class AgendaActivity extends ActionBarActivity {
 
         currentCalendar = new GregorianCalendar();
         listView = (ListView) findViewById(R.id.agendaTaskList);
-        getDates();
+
         tasks = new ArrayList<>();
         taskIndividuals = new ArrayList<>();
+        getDates();
         setupDates(tasks);
-
-        //AgendaTaskListAdapter adapter = new AgendaTaskListAdapter(this, )
-        //listView.setAdapter();
+        Collections.sort(taskIndividuals);
+        AgendaTaskListAdapter adapter = new AgendaTaskListAdapter(this, R.layout.agenda_task_item, taskIndividuals, tasks);
+        listView.setAdapter(adapter);
     }
 
     public void getDates() {

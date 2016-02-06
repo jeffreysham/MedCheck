@@ -5,7 +5,7 @@ import java.util.GregorianCalendar;
 /**
  * Created by Joanna Kai on 2/5/2016.
  */
-public class TaskIndividual {
+public class TaskIndividual implements Comparable<TaskIndividual>{
     private String name;
     private GregorianCalendar date;
     private int statistic;
@@ -38,5 +38,10 @@ public class TaskIndividual {
 
     public void setStatistic(int statistic) {
         this.statistic = statistic;
+    }
+
+    @Override
+    public int compareTo(TaskIndividual another) {
+        return this.getDate().compareTo(another.getDate());
     }
 }
