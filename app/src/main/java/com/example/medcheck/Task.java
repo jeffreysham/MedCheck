@@ -1,5 +1,6 @@
 package com.example.medcheck;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,9 +12,9 @@ public class Task {
     private String description;
     private int frequency;
 
-    public Task(String name, List<TaskIndividual> taskList, String description, int frequency) {
+    public Task(String name, String description, int frequency) {
         this.name = name;
-        this.taskList = taskList;
+        this.taskList = new ArrayList<>();
         this.description = description;
         this.frequency = frequency;
     }
