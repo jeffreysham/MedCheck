@@ -67,6 +67,22 @@ public class PieChart extends Activity {
                         i++;
                     }
                     RelativeLayout pie = (RelativeLayout) findViewById(R.id.pie);
+                    int value_no = 0;
+                    int value_yes = 0;
+
+                    for(int j = 0; j < values.length; j++)
+                    {
+                        if (values[j] <= 0){
+                            value_no++;
+                        } else if (values[j] >= 1) {
+                            value_yes++;
+                        }
+                    }
+
+                    values = new float[2];
+                    values[1] = value_no;
+                    values[0] = value_yes;
+
                     pie.addView(new MyGraphview(context, values));
                 }
             }
@@ -114,26 +130,12 @@ public class PieChart extends Activity {
         DisplayMetrics metrics = getResources().getDisplayMetrics();
         float scaleFactor = metrics.density;
         int temp=0;
-        public MyGraphview(Context context, float[] raw_values) {
+        public MyGraphview(Context context, float[] values) {
 
             super(context);
             int r = 85;
             int g = 198;
             int b = 218;
-
-            int value_no = 0;
-            int value_yes = 0;
-
-            for(int i = 0; i < raw_values.length; i++)
-            {
-                if (raw_values[i] <= 0){
-                    value_no++;
-                } else if (raw_values[i] >= 1) {
-                    value_yes++;
-                }
-            }
-
-            float[] values = {value_yes, value_no};
 
             int step = (255 - 218)/values.length;
 
@@ -143,7 +145,6 @@ public class PieChart extends Activity {
             for(int i=0;i<values.length;i++)
             {
                 COLORS[i] = Color.rgb(r, g, b);
-                value_degree[i]=values[i];
                 r = r + step;
                 g = g + step;
                 b = b + step;
