@@ -3,6 +3,7 @@ package com.example.medcheck;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -12,13 +13,20 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.RelativeLayout;
 
+import com.firebase.client.ChildEventListener;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+
+import java.util.ArrayList;
+import java.util.GregorianCalendar;
+
 /**
  * Created by Erica on 2/6/2016.
  */
 public class PieChart extends Activity {
     /** Called when the activity is first created. */
-    float values[]={1, 2, 2, 4};
-
+    float values[];
 
     public void goStats(View view) {
         Intent intent = new Intent(this, StatsActivity.class);
@@ -33,6 +41,47 @@ public class PieChart extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences preferences = this.getApplicationContext().getSharedPreferences("preferences", Context.MODE_PRIVATE);
+        final String email = preferences.getString("email", "Email Here");
+        final ArrayList<TaskIndividual> tasks = new ArrayList<>();
+
+        final Firebase ref = new Firebase("https://medcheck.firebaseio.com/tasks");
+
+
+
+        ref.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                String patientEmail = (String) dataSnapshot.child("patientEmail").getValue();
+                if (patientEmail.equals(email)) {
+                    //int statistic = Integer.parseInt(dataSnapshot.child("taskList").child("0").child("statistic").getValue() + "");
+                    ArrayList<Integer> statisticArray = new ArrayList<Integer>();
+                    values = new float[(int)dataSnapshot.getChildrenCount()];
+                    int i = 0;
+                    for (DataSnapshot stat: dataSnapshot.getChildren()) {
+                        values[i] = (int)stat.child("statistic").getValue();
+                        i++;
+                    }
+                }
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+            }
+        });
+
         setContentView(R.layout.activity_pie);
         RelativeLayout pie=(RelativeLayout) findViewById(R.id.pie);
         values=calculateData(values);
