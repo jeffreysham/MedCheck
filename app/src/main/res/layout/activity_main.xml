@@ -100,6 +100,7 @@
         style="@style/BlueText"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="ENTER TASK NAME HERE"
+        android:gravity="center"
         android:textSize="29dp"
         android:id="@+id/mainActTaskName"
         android:layout_below="@+id/textView"
