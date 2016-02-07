@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.database.DataSetObserver;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -63,8 +64,8 @@ public class DoctorMainActivity extends ActionBarActivity {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 if (dataSnapshot.getChildrenCount() > 0) {
-
-                    if (dataSnapshot.child("Doctor Email").getValue().equals(email)) {
+                    Log.i("snapshot", dataSnapshot.toString());
+                    if (dataSnapshot.child("Doctor Email") != null && dataSnapshot.child("Doctor Email").getValue().equals(email)) {
                         String patientName = (String)dataSnapshot.child("Name").getValue();
                         patientsList.add(patientName);
                     }
