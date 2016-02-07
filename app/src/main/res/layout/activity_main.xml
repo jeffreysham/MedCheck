@@ -88,7 +88,7 @@
         style="@style/BlackText"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Don't forget to"
+        android:text="Don't forget to:"
         android:textSize="20dp"
         android:id="@+id/textView"
         android:layout_marginTop="220dp"
