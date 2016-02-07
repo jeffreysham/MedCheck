@@ -6,7 +6,7 @@
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
 
     <TextView
-        style="@style/BigText"
+        style="@style/BlueText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
@@ -23,34 +23,42 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true">
         <ImageButton
-            android:layout_width="87dp"
-            android:layout_height="87dp"
-            android:scaleType="fitXY"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/floating_button"
+            android:padding="10dp"
+            android:layout_margin="5dp"
             android:id="@+id/calendar"
             android:src="@drawable/calendar_icon"
             android:backgroundTint="@color/roboto_calendar_blue"/>
 
         <ImageButton
-            android:layout_width="87dp"
-            android:layout_height="87dp"
-            android:scaleType="fitXY"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/floating_button"
+            android:padding="10dp"
+            android:layout_margin="5dp"
             android:id="@+id/agenda"
             android:src="@drawable/clock_icon"
             android:backgroundTint="@color/roboto_calendar_blue"/>
 
         <ImageButton
-            android:layout_width="87dp"
-            android:layout_height="87dp"
-            android:scaleType="fitXY"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/floating_button"
+            android:padding="10dp"
+            android:layout_margin="5dp"
             android:id="@+id/stats"
             android:src="@drawable/stat_icon"
             android:onClick="drawBar"
             android:backgroundTint="@color/roboto_calendar_blue"/>
 
         <ImageButton
-            android:layout_width="87dp"
-            android:layout_height="87dp"
-            android:scaleType="fitXY"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/floating_button"
+            android:padding="10dp"
+            android:layout_margin="5dp"
             android:id="@+id/notes"
             android:src="@drawable/note_icon"
             android:backgroundTint="@color/roboto_calendar_blue"/>
@@ -77,24 +85,38 @@
 
     <TextView
         android:layout_width="wrap_content"
+        style="@style/BlackText"
         android:layout_height="wrap_content"
-        style="@style/BigText"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="ENTER TASK NAME HERE"
-        android:textSize="29dp"
-        android:id="@+id/mainActTaskName"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true" />
+        android:text="Don't forget to"
+        android:textSize="20dp"
+        android:id="@+id/textView"
+        android:layout_marginTop="220dp"
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/SmallText"
+        style="@style/BlueText"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="ENTER TASK NAME HERE"
+        android:textSize="29dp"
+        android:id="@+id/mainActTaskName"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/BlackText"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="TIME"
         android:textSize="24dp"
         android:id="@+id/mainActTaskTime"
         android:layout_below="@+id/mainActTaskName"
         android:layout_centerHorizontal="true" />
-    
+
+
+
+
 </RelativeLayout>
