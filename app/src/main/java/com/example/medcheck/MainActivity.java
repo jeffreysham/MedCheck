@@ -94,7 +94,7 @@ public class MainActivity extends ActionBarActivity {
                     int year = Integer.parseInt(dataSnapshot.child("year").getValue() + "");
                     int hour = Integer.parseInt(dataSnapshot.child("hour").getValue() + "");
                     int mins = Integer.parseInt(dataSnapshot.child("mins").getValue() + "");
-                    GregorianCalendar date = new GregorianCalendar(year, month, day, hour, mins);
+                    String date = month+"/"+day+"/"+year+"/"+hour+"/"+mins;
 
                     TaskIndividual taskIndividual = new TaskIndividual(taskName, date, statistic);
 

@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 import com.example.medcheck.RobotoCalendarView;
 import com.example.medcheck.RobotoCalendarView.RobotoCalendarListener;
+import com.firebase.client.Firebase;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -39,6 +40,7 @@ public class CalendarActivity extends ActionBarActivity implements RobotoCalenda
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
+
         robotoCalendarView = (RobotoCalendarView) findViewById(R.id.calendarPicker);
 
         // Set listener, in this case, the same activity
@@ -63,15 +65,16 @@ public class CalendarActivity extends ActionBarActivity implements RobotoCalenda
     }
 
     public void getDates() {
-        Task temp = new Task("Eat YOUR PILLS!!!!!", "Medication Counter", 0);
-        temp.getTaskList().add(new TaskIndividual(temp.getName(), currentCalendar, 0));
-        temp.getTaskList().add(new TaskIndividual(temp.getName(), currentCalendar, 3));
+        Task temp = new Task("Exercise ", "Get 30 minutes of aerobic exercise a day.", 0);
+        String date1 = "1/13/2016/12/30";
+        temp.getTaskList().add(new TaskIndividual(temp.getName(), date1, 0));
+        temp.getTaskList().add(new TaskIndividual(temp.getName(), date1, 3));
         tasks.add(temp);
 
-        Task temp2 = new Task("RUN!!!!!", "exercise", 0);
-        GregorianCalendar other = new GregorianCalendar(2016, 1, 15);
-        temp2.getTaskList().add(new TaskIndividual(temp2.getName(), other, 0));
-        temp2.getTaskList().add(new TaskIndividual(temp2.getName(), other, 3));
+        Task temp2 = new Task("Take Insulin", "Take your R insulin at least 30 mins before eating.", 0);
+        String date2 = "1/16/2016/12/30";
+        temp2.getTaskList().add(new TaskIndividual(temp2.getName(), date2, 0));
+        temp2.getTaskList().add(new TaskIndividual(temp2.getName(), date2, 3));
         tasks.add(temp2);
     }
 
@@ -83,8 +86,8 @@ public class CalendarActivity extends ActionBarActivity implements RobotoCalenda
 
             for (int j = 0; j < indList.size(); j++) {
                 TaskIndividual tempIndTask = indList.get(j);
-
-                if (tempIndTask.getDate().getTime().getMonth() == currentCalendar.getTime().getMonth()) {
+                int month = Integer.parseInt(tempIndTask.getDate().substring(0,tempIndTask.getDate().indexOf("/")));
+                if (month == currentCalendar.getTime().getMonth()) {
                     robotoCalendarView.markFirstUnderlineWithStyle(RobotoCalendarView.BLUE_COLOR, tempIndTask.getDate().getTime());
                 }
             }

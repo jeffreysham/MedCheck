@@ -47,7 +47,7 @@ public class StatsActivity extends ActionBarActivity {
     }
 
     public void getTasks() {
-        Task temp = new Task("Check insulin levels", "Make sure your insulin levels are below 30g.", 0);
+        /*Task temp = new Task("Check insulin levels", "Make sure your insulin levels are below 30g.", 0);
         temp.getTaskList().add(new TaskIndividual(temp.getName(), currentCalendar, 0));
         temp.getTaskList().add(new TaskIndividual(temp.getName(), currentCalendar, 3));
         tasks.add(temp);
@@ -62,6 +62,6 @@ public class StatsActivity extends ActionBarActivity {
         GregorianCalendar other1 = new GregorianCalendar(2016, 1, 15);
         temp2.getTaskList().add(new TaskIndividual(temp3.getName(), other1, 0));
         temp2.getTaskList().add(new TaskIndividual(temp3.getName(), other1, 3));
-        tasks.add(temp3);
+        tasks.add(temp3);*/
     }
 }

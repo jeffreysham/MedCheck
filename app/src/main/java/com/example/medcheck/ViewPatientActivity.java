@@ -90,17 +90,25 @@ public class ViewPatientActivity extends ActionBarActivity {
                                         Task newTask = new Task(nameInput.getText().toString().trim(), descInput.getText().toString().trim(), 0);
                                         newTask.setDoctorEmail(email);
                                         newTask.setPatientEmail(thePatientEmail);
-                                        TaskIndividual newTaskIndiv = new TaskIndividual(nameInput.getText().toString().trim(),
-                                                new GregorianCalendar(Integer.parseInt(yearInput.getText().toString().trim()), Integer.parseInt(monthInput.getText().toString().trim()) - 1, Integer.parseInt(dayInput.getText().toString().trim())));
+
+                                        int month = Integer.parseInt(monthInput.getText().toString().trim());
+                                        int day = Integer.parseInt(dayInput.getText().toString().trim());
+                                        int year = Integer.parseInt(yearInput.getText().toString().trim());
+                                        int hour = Integer.parseInt(hoursInput.getText().toString().trim());
+                                        int mins = Integer.parseInt(minutesInput.getText().toString().trim());
+
+                                        String date = month+"/"+day+"/"+year+"/"+hour+"/"+mins;
+
+                                        TaskIndividual newTaskIndiv = new TaskIndividual(nameInput.getText().toString().trim(),date);
                                         newTask.getTaskList().add(newTaskIndiv);
                                         Firebase newUserRef = ref.child("tasks").child(nameInput.getText().toString().trim());
                                         newUserRef.setValue(newTask);
 
-                                        newUserRef.child("day").setValue(Integer.parseInt(dayInput.getText().toString().trim()));
-                                        newUserRef.child("month").setValue(Integer.parseInt(monthInput.getText().toString().trim()));
-                                        newUserRef.child("year").setValue(Integer.parseInt(yearInput.getText().toString().trim()));
-                                        newUserRef.child("hour").setValue(Integer.parseInt(hoursInput.getText().toString().trim()));
-                                        newUserRef.child("mins").setValue(Integer.parseInt(minutesInput.getText().toString().trim()));
+                                        newUserRef.child("day").setValue(day);
+                                        newUserRef.child("month").setValue(month);
+                                        newUserRef.child("year").setValue(year);
+                                        newUserRef.child("hour").setValue(hour);
+                                        newUserRef.child("mins").setValue(mins);
 
                                         dialog.dismiss();
                                     }
@@ -144,7 +152,7 @@ public class ViewPatientActivity extends ActionBarActivity {
                     int year = Integer.parseInt(dataSnapshot.child("year").getValue() + "");
                     int hour = Integer.parseInt(dataSnapshot.child("hour").getValue() + "");
                     int mins = Integer.parseInt(dataSnapshot.child("mins").getValue() + "");
-                    GregorianCalendar date = new GregorianCalendar(year, month, day, hour, mins);
+                    String date = month+"/"+day+"/"+year+"/"+hour+"/"+mins;
 
                     TaskIndividual taskIndividual = new TaskIndividual(taskName, date, statistic);
 

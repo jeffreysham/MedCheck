@@ -76,7 +76,8 @@ public class AgendaActivity extends ActionBarActivity {
     }
 
     public void getDates() {
-        Task temp = new Task("Eat YOUR PILLS!!!!!", "Medication Counter", 0);
+        // TODO
+        /*Task temp = new Task("Eat YOUR PILLS!!!!!", "Medication Counter", 0);
         temp.getTaskList().add(new TaskIndividual(temp.getName(), currentCalendar, 0));
         temp.getTaskList().add(new TaskIndividual(temp.getName(), currentCalendar, 3));
         tasks.add(temp);
@@ -85,7 +86,7 @@ public class AgendaActivity extends ActionBarActivity {
         GregorianCalendar other = new GregorianCalendar(2016, 1, 15);
         temp2.getTaskList().add(new TaskIndividual(temp2.getName(), other, 0));
         temp2.getTaskList().add(new TaskIndividual(temp2.getName(), other, 3));
-        tasks.add(temp2);
+        tasks.add(temp2);*/
     }
 
     public void setupDates(ArrayList<Task> items) {
@@ -97,9 +98,10 @@ public class AgendaActivity extends ActionBarActivity {
             for (int j = 0; j < indList.size(); j++) {
                 TaskIndividual tempIndTask = indList.get(j);
 
-                if (tempIndTask.getDate().getTime().getMonth() == currentCalendar.getTime().getMonth()) {
+                //TODO
+                /*if (tempIndTask.getDate().getTime().getMonth() == currentCalendar.getTime().getMonth()) {
                     taskIndividuals.add(tempIndTask);
-                }
+                }*/
             }
         }
 

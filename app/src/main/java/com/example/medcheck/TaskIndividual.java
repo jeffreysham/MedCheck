@@ -1,22 +1,20 @@
 package com.example.medcheck;
 
-import java.util.GregorianCalendar;
-
 /**
  * Created by Joanna Kai on 2/5/2016.
  */
 public class TaskIndividual implements Comparable<TaskIndividual>{
     private String name;
-    private GregorianCalendar date;
+    private String date;
     private int statistic;
 
-    public TaskIndividual(String name, GregorianCalendar date, int statistic) {
+    public TaskIndividual(String name, String date, int statistic) {
         this.name = name;
         this.date = date;
         this.statistic = statistic;
     }
 
-    public TaskIndividual(String name, GregorianCalendar date) {
+    public TaskIndividual(String name, String date) {
         this.name = name;
         this.date = date;
         this.statistic = -1;
@@ -30,11 +28,11 @@ public class TaskIndividual implements Comparable<TaskIndividual>{
         this.name = name;
     }
 
-    public GregorianCalendar getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(GregorianCalendar date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
