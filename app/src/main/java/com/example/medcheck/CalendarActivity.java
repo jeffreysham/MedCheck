@@ -86,9 +86,15 @@ public class CalendarActivity extends ActionBarActivity implements RobotoCalenda
 
             for (int j = 0; j < indList.size(); j++) {
                 TaskIndividual tempIndTask = indList.get(j);
-                int month = Integer.parseInt(tempIndTask.getDate().substring(0,tempIndTask.getDate().indexOf("/")));
+
+                String[] array = tempIndTask.getDate().split("/");
+
+                int month = Integer.parseInt(array[0]);
+                int day = Integer.parseInt(array[1]);
+
                 if (month == currentCalendar.getTime().getMonth()) {
-                    robotoCalendarView.markFirstUnderlineWithStyle(RobotoCalendarView.BLUE_COLOR, tempIndTask.getDate().getTime());
+                    robotoCalendarView.markFirstUnderlineWithStyle(RobotoCalendarView.BLUE_COLOR, new Date(2016,1,day));
+
                 }
             }
         }
@@ -104,7 +110,13 @@ public class CalendarActivity extends ActionBarActivity implements RobotoCalenda
 
             for (int j = 0; j < indList.size(); j++) {
                 TaskIndividual tempIndTask = indList.get(j);
-                if (tempIndTask.getDate().getTime().getMonth() == currentCalendar.getTime().getMonth() && tempIndTask.getDate().getTime().getDay() == date.getDay()) {
+
+                String[] array = tempIndTask.getDate().split("/");
+
+                int month = Integer.parseInt(array[0]);
+                int day = Integer.parseInt(array[1]);
+
+                if (month == currentCalendar.getTime().getMonth() && day == date.getDay()) {
                     taskIndividuals.add(tempIndTask);
                 }
             }

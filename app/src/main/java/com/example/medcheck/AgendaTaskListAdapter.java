@@ -49,9 +49,16 @@ public class AgendaTaskListAdapter extends ArrayAdapter<TaskIndividual> {
             holder = (TaskViewHolder) convertView.getTag();
         }
         if (rowItem != null) {
-            holder.taskNameDate.setText(getMonthString(rowItem.getDate().get(Calendar.MONTH)) + " " + rowItem.getDate().get(Calendar.DAY_OF_MONTH) + "");
+
+            String[] array = rowItem.getDate().split("/");
+            int month = Integer.parseInt(array[0]);
+            int day = Integer.parseInt(array[1]);
+            int theNewMins = Integer.parseInt(array[4]);
+            int hourTime = Integer.parseInt(array[3]);
+
+            holder.taskNameDate.setText(month + " " + day + "");
             holder.taskNameText.setText(rowItem.getName());
-            holder.taskNameTime.setText(formatTime(rowItem.getDate().get(Calendar.HOUR_OF_DAY),rowItem.getDate().get(Calendar.MINUTE)));;
+            holder.taskNameTime.setText(formatTime(hourTime,theNewMins));;
             holder.taskNameDesc.setText(getDesc(rowItem));
         }
         return convertView;

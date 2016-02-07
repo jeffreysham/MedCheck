@@ -43,8 +43,15 @@ public class TaskListAdapter extends ArrayAdapter<TaskIndividual> {
             holder = (TaskViewHolder) convertView.getTag();
         }
         if (rowItem != null) {
+
+            String[] array = rowItem.getDate().split("/");
+
+            int theNewMins = Integer.parseInt(array[4]);
+            int hourTime = Integer.parseInt(array[3]);
+
+
             holder.taskNameText.setText(rowItem.getName());
-            holder.taskNameDate.setText(formatTime(rowItem.getDate().get(Calendar.HOUR_OF_DAY),rowItem.getDate().get(Calendar.MINUTE)));
+            holder.taskNameDate.setText(formatTime(hourTime,theNewMins));
 
         }
         return convertView;

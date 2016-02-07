@@ -76,17 +76,17 @@ public class AgendaActivity extends ActionBarActivity {
     }
 
     public void getDates() {
-        // TODO
-        /*Task temp = new Task("Eat YOUR PILLS!!!!!", "Medication Counter", 0);
-        temp.getTaskList().add(new TaskIndividual(temp.getName(), currentCalendar, 0));
-        temp.getTaskList().add(new TaskIndividual(temp.getName(), currentCalendar, 3));
+        Task temp = new Task("Exercise ", "Get 30 minutes of aerobic exercise a day.", 0);
+        String date1 = "1/13/2016/12/30";
+        temp.getTaskList().add(new TaskIndividual(temp.getName(), date1, 0));
+        temp.getTaskList().add(new TaskIndividual(temp.getName(), date1, 3));
         tasks.add(temp);
 
-        Task temp2 = new Task("RUN!!!!!", "exercise", 0);
-        GregorianCalendar other = new GregorianCalendar(2016, 1, 15);
-        temp2.getTaskList().add(new TaskIndividual(temp2.getName(), other, 0));
-        temp2.getTaskList().add(new TaskIndividual(temp2.getName(), other, 3));
-        tasks.add(temp2);*/
+        Task temp2 = new Task("Take Insulin", "Take your R insulin at least 30 mins before eating.", 0);
+        String date2 = "1/16/2016/12/30";
+        temp2.getTaskList().add(new TaskIndividual(temp2.getName(), date2, 0));
+        temp2.getTaskList().add(new TaskIndividual(temp2.getName(), date2, 3));
+        tasks.add(temp2);
     }
 
     public void setupDates(ArrayList<Task> items) {
@@ -97,11 +97,13 @@ public class AgendaActivity extends ActionBarActivity {
 
             for (int j = 0; j < indList.size(); j++) {
                 TaskIndividual tempIndTask = indList.get(j);
+                String[] array = tempIndTask.getDate().split("/");
 
-                //TODO
-                /*if (tempIndTask.getDate().getTime().getMonth() == currentCalendar.getTime().getMonth()) {
+                int month = Integer.parseInt(array[0]);
+
+                if (month == currentCalendar.getTime().getMonth()) {
                     taskIndividuals.add(tempIndTask);
-                }*/
+                }
             }
         }
 

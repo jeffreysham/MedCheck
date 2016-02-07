@@ -55,7 +55,7 @@ public class PieChart extends Activity {
                 String patientEmail = (String) dataSnapshot.child("patientEmail").getValue();
                 if (patientEmail.equals(email)) {
                     //int statistic = Integer.parseInt(dataSnapshot.child("taskList").child("0").child("statistic").getValue() + "");
-                    ArrayList<Integer> statisticArray = new ArrayList<Integer>();
+
                     values = new float[(int)dataSnapshot.getChildrenCount()];
                     int i = 0;
                     for (DataSnapshot stat: dataSnapshot.getChildren()) {

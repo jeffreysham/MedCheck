@@ -106,8 +106,8 @@ public class MainActivity extends ActionBarActivity {
                     mainActTaskName.setText(tasks.get(0).getName());
 
                     final TextView mainActTaskTime = (TextView) findViewById(R.id.mainActTaskTime);
-                    mainActTaskTime.setText("at " + formatTime(tasks.get(0).getTaskList().get(0).getDate().get(Calendar.HOUR_OF_DAY),
-                            tasks.get(0).getTaskList().get(0).getDate().get(Calendar.MINUTE)));
+
+                    mainActTaskTime.setText("at " + formatTime(hour,mins));
 
                     // Already done button
                     final Button mainActDoneButton = (Button) findViewById(R.id.mainActDoneButton);
@@ -126,14 +126,19 @@ public class MainActivity extends ActionBarActivity {
                                             tasks.get(count).getTaskList().get(0).setStatistic(1);
                                             count++;
                                             if (count == tasks.size()) {
-                                                mainActTaskName.setText("Done tasks!");
+                                                mainActTaskName.setText("All tasks completed!");
                                                 mainActTaskTime.setText("");
                                                 mainActDoneButton.setEnabled(false);
                                                 mainActNotDoneButton.setEnabled(false);
                                             } else {
                                                 mainActTaskName.setText(tasks.get(count).getName());
-                                                mainActTaskTime.setText("at " + formatTime(tasks.get(count).getTaskList().get(0).getDate().get(Calendar.HOUR_OF_DAY),
-                                                        tasks.get(count).getTaskList().get(0).getDate().get(Calendar.MINUTE)));
+
+                                                String[] array = tasks.get(count).getTaskList().get(0).getDate().split("/");
+
+                                                int theNewMins = Integer.parseInt(array[4]);
+                                                int hourTime = Integer.parseInt(array[3]);
+
+                                                mainActTaskTime.setText("at " + formatTime(hourTime,theNewMins));
                                             }
                                         }
                                     })
@@ -152,14 +157,17 @@ public class MainActivity extends ActionBarActivity {
                                             tasks.get(count).getTaskList().get(0).setStatistic(0);
                                             count++;
                                             if (count == tasks.size()) {
-                                                mainActTaskName.setText("Done tasks!");
+                                                mainActTaskName.setText("All tasks completed!");
                                                 mainActTaskTime.setText("");
                                                 mainActDoneButton.setEnabled(false);
                                                 mainActNotDoneButton.setEnabled(false);
                                             } else {
                                                 mainActTaskName.setText(tasks.get(count).getName());
-                                                mainActTaskTime.setText("at " + formatTime(tasks.get(count).getTaskList().get(0).getDate().get(Calendar.HOUR_OF_DAY),
-                                                        tasks.get(count).getTaskList().get(0).getDate().get(Calendar.MINUTE)));
+                                                String[] array = tasks.get(count).getTaskList().get(0).getDate().split("/");
+
+                                                int theNewMins = Integer.parseInt(array[4]);
+                                                int hourTime = Integer.parseInt(array[3]);
+                                                mainActTaskTime.setText("at " + formatTime(hourTime,theNewMins));
                                             }
                                         }
                                     })
