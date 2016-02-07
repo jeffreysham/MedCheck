@@ -19,8 +19,9 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-
 public class MainActivity extends ActionBarActivity {
+
+    int count = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +69,8 @@ public class MainActivity extends ActionBarActivity {
         String name = preferences.getString("name", "Username Here");
         userGreetingView.setText("Hello, " + name);
 
-        Task AccutanePills = new Task("Take Accutane", "For Acne", 1);
+        // Dummy tasks
+        Task AccutanePills = new Task("Don't forget to:\nTake Accutane", "For Acne", 1);
         List<TaskIndividual> AccutanePillList = new ArrayList<>();
         for (int i=0; i<30; i++) {
             String day = "Day " + Integer.toString(i);
@@ -77,16 +79,33 @@ public class MainActivity extends ActionBarActivity {
         }
         AccutanePills.setTaskList(AccutanePillList);
 
-        final Task temp = AccutanePills;
+        Task StopSmoking = new Task("Stop Smoking", "For smokers", 1);
+        List<TaskIndividual> SmokingList = new ArrayList<>();
+        for (int i=0; i<30; i++) {
+            String day = "Day " + Integer.toString(i);
+            TaskIndividual temp = new TaskIndividual(day, new GregorianCalendar(2016,2,i,1,30));
+            SmokingList.add(temp);
+        }
+        StopSmoking.setTaskList(SmokingList);
 
-        TextView mainActTaskName = (TextView) findViewById(R.id.mainActTaskName);
-        mainActTaskName.setText(temp.getName());
+        final ArrayList<Task> tasks = new ArrayList<>();
+        tasks.add(AccutanePills);
+        tasks.add(StopSmoking);
 
-        TextView mainActTaskTime = (TextView) findViewById(R.id.mainActTaskTime);
-        mainActTaskTime.setText("at " + formatTime(temp.getTaskList().get(3).getDate().get(Calendar.HOUR_OF_DAY), temp.getTaskList().get(3).getDate().get(Calendar.MINUTE)));
+        final TextView mainActTaskName = (TextView) findViewById(R.id.mainActTaskName);
+        mainActTaskName.setText(tasks.get(0).getName());
+
+        final TextView mainActTaskTime = (TextView) findViewById(R.id.mainActTaskTime);
+        mainActTaskTime.setText("at " + formatTime(tasks.get(0).getTaskList().get(15).getDate().get(Calendar.HOUR_OF_DAY),
+                tasks.get(0).getTaskList().get(15).getDate().get(Calendar.MINUTE)));
 
         // Already done button
-        Button mainActDoneButton = (Button) findViewById(R.id.mainActDoneButton);
+        final Button mainActDoneButton = (Button) findViewById(R.id.mainActDoneButton);
+
+        // Not today button
+        final Button mainActNotDoneButton = (Button) findViewById(R.id.mainActNotDoneButton);
+
+        // Button operations
         mainActDoneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,15 +114,24 @@ public class MainActivity extends ActionBarActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 // if yes, adjust statistic for the day. currently only day 15 of current month
-                                temp.getTaskList().get(15).setStatistic(1);
+                                tasks.get(count).getTaskList().get(15).setStatistic(1);
+                                count++;
+                                if (count == tasks.size()) {
+                                    mainActTaskName.setText("Done tasks!");
+                                    mainActTaskTime.setText("");
+                                    mainActDoneButton.setEnabled(false);
+                                    mainActNotDoneButton.setEnabled(false);
+                                } else {
+                                    mainActTaskName.setText(tasks.get(count).getName());
+                                    mainActTaskTime.setText("at " + formatTime(tasks.get(count).getTaskList().get(15).getDate().get(Calendar.HOUR_OF_DAY),
+                                            tasks.get(count).getTaskList().get(15).getDate().get(Calendar.MINUTE)));
+                                }
                             }
                         })
                         .setNegativeButton("Cancel", null).show();
             }
         });
 
-        // Not today button
-        Button mainActNotDoneButton = (Button) findViewById(R.id.mainActNotDoneButton);
         mainActNotDoneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,7 +140,18 @@ public class MainActivity extends ActionBarActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 // if yes, adjust statistic for the day. currently only day 15 of current month
-                                temp.getTaskList().get(15).setStatistic(0);
+                                tasks.get(count).getTaskList().get(15).setStatistic(0);
+                                count++;
+                                if (count == tasks.size()) {
+                                    mainActTaskName.setText("Done tasks!");
+                                    mainActTaskTime.setText("");
+                                    mainActDoneButton.setEnabled(false);
+                                    mainActNotDoneButton.setEnabled(false);
+                                } else {
+                                    mainActTaskName.setText(tasks.get(count).getName());
+                                    mainActTaskTime.setText("at " + formatTime(tasks.get(count).getTaskList().get(15).getDate().get(Calendar.HOUR_OF_DAY),
+                                            tasks.get(count).getTaskList().get(15).getDate().get(Calendar.MINUTE)));
+                                }
                             }
                         })
                         .setNegativeButton("Cancel", null).show();

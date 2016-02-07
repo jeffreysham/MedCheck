@@ -62,7 +62,6 @@ public class AgendaActivity extends ActionBarActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
-
                     }
                 })
                 .setNeutralButton("CANCEL", new DialogInterface.OnClickListener() {
