@@ -98,7 +98,7 @@ public class ViewPatientActivity extends ActionBarActivity {
         });
 
         getTasks();
-        StatTaskListAdapter adapter = new StatTaskListAdapter(this, R.layout.patient_item, tasks);
+        StatTaskListAdapter adapter = new StatTaskListAdapter(this, R.layout.stat_task_item, tasks);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -119,7 +119,8 @@ public class ViewPatientActivity extends ActionBarActivity {
         ref.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-
+                Task task = dataSnapshot.getValue(Task.class);
+                tasks.add(task);
             }
 
             @Override
