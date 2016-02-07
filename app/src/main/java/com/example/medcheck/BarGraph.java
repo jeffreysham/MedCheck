@@ -94,16 +94,10 @@ public class BarGraph extends Activity {
             }
         });
 
-<<<<<<< HEAD
         for (int i=0; i < tasks.size(); i++) {
             values[i] = tasks.get(i).getStatistic();
         }
 
-
-=======
-
-        setContentView(R.layout.activity_bar);
->>>>>>> origin/master
         RelativeLayout bar = (RelativeLayout) findViewById(R.id.bar);
         BarChart our_chart = new BarChart(this, values);
         bar.addView(our_chart);
