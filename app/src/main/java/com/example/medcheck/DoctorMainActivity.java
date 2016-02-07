@@ -30,6 +30,7 @@ import java.util.ArrayList;
 public class DoctorMainActivity extends ActionBarActivity {
 
     ArrayList<String> patientsList;
+    ArrayList<String> patientEmailList;
     ListView patientListView;
     Context context = this;
     @Override
@@ -45,6 +46,7 @@ public class DoctorMainActivity extends ActionBarActivity {
 
         patientListView = (ListView) findViewById(R.id.patientList);
         patientsList = new ArrayList<>();
+        patientEmailList = new ArrayList<>();
         getPatients(email);
 
         ImageButton button = (ImageButton) findViewById(R.id.addPatientButton);
@@ -68,6 +70,7 @@ public class DoctorMainActivity extends ActionBarActivity {
                     if (dataSnapshot.child("Doctor Email") != null && dataSnapshot.child("Doctor Email").getValue().equals(email)) {
                         String patientName = (String)dataSnapshot.child("Name").getValue();
                         patientsList.add(patientName);
+                        patientEmailList.add((String) dataSnapshot.getKey());
                     }
 
                     ListAdapter adapter = new ArrayAdapter<String>(context, R.layout.patient_item, patientsList);
@@ -75,8 +78,11 @@ public class DoctorMainActivity extends ActionBarActivity {
                     patientListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            patientsList.get(position);
+
                             //Go to view patients activity
+                            Intent intent = new Intent(context, ViewPatientActivity.class);
+                            intent.putExtra("patient name", patientEmailList.get(position));
+                            startActivity(intent);
                         }
                     });
                 }

@@ -6,6 +6,7 @@
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
 
     <TextView
+        style="@style/BigText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
@@ -18,34 +19,38 @@
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="90dp"
+        android:layout_marginTop="40dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true">
         <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="87dp"
+            android:layout_height="87dp"
+            android:scaleType="fitXY"
             android:id="@+id/calendar"
             android:src="@drawable/calendar_icon"
             android:backgroundTint="@color/roboto_calendar_blue"/>
 
         <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="87dp"
+            android:layout_height="87dp"
+            android:scaleType="fitXY"
             android:id="@+id/agenda"
             android:src="@drawable/clock_icon"
             android:backgroundTint="@color/roboto_calendar_blue"/>
 
         <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="87dp"
+            android:layout_height="87dp"
+            android:scaleType="fitXY"
             android:id="@+id/stats"
             android:src="@drawable/stat_icon"
             android:onClick="drawBar"
             android:backgroundTint="@color/roboto_calendar_blue"/>
 
         <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="87dp"
+            android:layout_height="87dp"
+            android:scaleType="fitXY"
             android:id="@+id/notes"
             android:src="@drawable/note_icon"
             android:backgroundTint="@color/roboto_calendar_blue"/>
@@ -73,8 +78,10 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        style="@style/BigText"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="ENTER TASK NAME HERE"
+        android:textSize="29dp"
         android:id="@+id/mainActTaskName"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true" />
@@ -82,13 +89,12 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        style="@style/SmallText"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="TIME"
+        android:textSize="24dp"
         android:id="@+id/mainActTaskTime"
         android:layout_below="@+id/mainActTaskName"
         android:layout_centerHorizontal="true" />
-
-
-
-
+    
 </RelativeLayout>
