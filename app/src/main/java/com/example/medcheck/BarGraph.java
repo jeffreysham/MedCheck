@@ -5,6 +5,7 @@ package com.example.medcheck;
  */
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -16,6 +17,17 @@ import android.widget.RelativeLayout;
 
 public class BarGraph extends Activity {
     float values[]={1, 2, 3, 2, 12, 5};
+
+
+    public void drawPie(View view) {
+        Intent intent = new Intent(this, PieChart.class);
+        startActivity(intent);
+    }
+
+    public void drawBar(View view) {
+        Intent intent = new Intent(this, BarGraph.class);
+        startActivity(intent);
+    }
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
