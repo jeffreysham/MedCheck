@@ -3,11 +3,11 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_calendar">CalendarActivity</string>
-    <string name="title_activity_agenda">AgendaActivity</string>
-    <string name="title_activity_login">LoginActivity</string>
-    <string name="title_activity_sign_up">SignUpActivity</string>
-    <string name="title_activity_doctor_main">DoctorMainActivity</string>
-    <string name="title_activity_add_patient">AddPatientActivity</string>
-    <string name="title_activity_view_patient">ViewPatientActivity</string>
+    <string name="title_activity_calendar">Calendar</string>
+    <string name="title_activity_agenda">Agenda</string>
+    <string name="title_activity_login">Login</string>
+    <string name="title_activity_sign_up">Sign Up</string>
+    <string name="title_activity_doctor_main">HealthMate</string>
+    <string name="title_activity_add_patient">Add Patient</string>
+    <string name="title_activity_view_patient">View Patient</string>
 </resources>

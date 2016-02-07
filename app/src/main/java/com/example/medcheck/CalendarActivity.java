@@ -116,7 +116,7 @@ public class CalendarActivity extends ActionBarActivity implements RobotoCalenda
                 int month = Integer.parseInt(array[0]);
                 int day = Integer.parseInt(array[1]);
 
-                if (month == currentCalendar.getTime().getMonth() && day == date.getDay()) {
+                if (month == currentCalendar.getTime().getMonth() && day+1 == date.getDate()) {
                     taskIndividuals.add(tempIndTask);
                 }
             }

@@ -26,7 +26,7 @@ import java.util.GregorianCalendar;
 
 public class BarGraph extends Activity {
     float values[];
-
+    Context context = this;
     public void drawPie(View view) {
         Intent intent = new Intent(this, PieChart.class);
         startActivity(intent);
@@ -74,6 +74,13 @@ public class BarGraph extends Activity {
                         TaskIndividual taskIndividual = new TaskIndividual(taskName, date, (int) statisticValues[j]);
                         tasks.add(taskIndividual);
                     }
+                    for (int j = 0; j < tasks.size(); j++) {
+                        values[j] = tasks.get(j).getStatistic();
+                    }
+
+                    RelativeLayout bar = (RelativeLayout) findViewById(R.id.bar);
+                    BarChart our_chart = new BarChart(context, values);
+                    bar.addView(our_chart);
                 }
             }
 
@@ -94,13 +101,7 @@ public class BarGraph extends Activity {
             }
         });
 
-        for (int i=0; i < tasks.size(); i++) {
-            values[i] = tasks.get(i).getStatistic();
-        }
 
-        RelativeLayout bar = (RelativeLayout) findViewById(R.id.bar);
-        BarChart our_chart = new BarChart(this, values);
-        bar.addView(our_chart);
     }
 
     public class BarChart extends View {

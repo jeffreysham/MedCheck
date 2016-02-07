@@ -56,7 +56,7 @@ public class AgendaTaskListAdapter extends ArrayAdapter<TaskIndividual> {
             int theNewMins = Integer.parseInt(array[4]);
             int hourTime = Integer.parseInt(array[3]);
 
-            holder.taskNameDate.setText(month + " " + day + "");
+            holder.taskNameDate.setText(getMonthString(month) + " " + day + "");
             holder.taskNameText.setText(rowItem.getName());
             holder.taskNameTime.setText(formatTime(hourTime,theNewMins));;
             holder.taskNameDesc.setText(getDesc(rowItem));

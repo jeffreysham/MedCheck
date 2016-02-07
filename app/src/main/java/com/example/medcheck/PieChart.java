@@ -10,6 +10,7 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 
@@ -27,6 +28,7 @@ import java.util.GregorianCalendar;
 public class PieChart extends Activity {
     /** Called when the activity is first created. */
     float values[];
+    Context context = this;
 
     public void goStats(View view) {
         Intent intent = new Intent(this, StatsActivity.class);
@@ -41,6 +43,7 @@ public class PieChart extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_pie);
         SharedPreferences preferences = this.getApplicationContext().getSharedPreferences("preferences", Context.MODE_PRIVATE);
         final String email = preferences.getString("email", "Email Here");
         final ArrayList<TaskIndividual> tasks = new ArrayList<>();
@@ -55,13 +58,17 @@ public class PieChart extends Activity {
                 String patientEmail = (String) dataSnapshot.child("patientEmail").getValue();
                 if (patientEmail.equals(email)) {
                     //int statistic = Integer.parseInt(dataSnapshot.child("taskList").child("0").child("statistic").getValue() + "");
-                    values = new float[(int)dataSnapshot.getChildrenCount()];
-
+                    values = new float[(int) dataSnapshot.getChildrenCount()];
+                    Log.i("testing", dataSnapshot.toString());
                     int i = 0;
-                    for (DataSnapshot stat : dataSnapshot.getChildren()) {
-                        values[i] = (int) stat.child("statistic").getValue();
+                    for (DataSnapshot stat : dataSnapshot.child("taskList").getChildren()) {
+
+                        values[i] = (int)stat.child("statistic").getValue();
                         i++;
                     }
+                    RelativeLayout pie = (RelativeLayout) findViewById(R.id.pie);
+                    values = calculateData(values);
+                    pie.addView(new MyGraphview(context, values));
                 }
             }
 
@@ -82,10 +89,8 @@ public class PieChart extends Activity {
             }
         });
 
-        setContentView(R.layout.activity_pie);
-        RelativeLayout pie=(RelativeLayout) findViewById(R.id.pie);
-        values=calculateData(values);
-        pie.addView(new MyGraphview(this,values));
+
+
 
     }
     private float[] calculateData(float[] data) {
