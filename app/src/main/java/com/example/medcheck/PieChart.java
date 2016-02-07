@@ -20,8 +20,8 @@ public class PieChart extends Activity {
     float values[]={1, 2, 2, 4};
 
 
-    public void drawPie(View view) {
-        Intent intent = new Intent(this, PieChart.class);
+    public void goStats(View view) {
+        Intent intent = new Intent(this, StatsActivity.class);
         startActivity(intent);
     }
 

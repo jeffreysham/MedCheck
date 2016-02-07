@@ -7,7 +7,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Task Name"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="25dp"
         android:layout_marginTop="5dp"
         android:textColor="@color/roboto_calendar_blue"
         android:textAppearance="?android:attr/textAppearanceLarge" />
@@ -16,8 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Task Time"
-        android:textColor="@color/roboto_calendar_blue"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="25dp"
         android:layout_marginTop="5dp"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 </LinearLayout>

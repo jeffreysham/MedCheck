@@ -62,7 +62,7 @@ public class ViewPatientActivity extends ActionBarActivity {
         String name = preferences.getString("name", "Username Here");
         final String email = preferences.getString("email", "Email Here");
         ImageButton addTaskButton = (ImageButton) findViewById(R.id.addTask);
-        ImageButton addNoteButton = (ImageButton) findViewById(R.id.addNote);
+
         final Context context = this;
         listView = (ListView) findViewById(R.id.doctorViewTasksList);
 

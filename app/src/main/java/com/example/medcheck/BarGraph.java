@@ -32,8 +32,8 @@ public class BarGraph extends Activity {
         startActivity(intent);
     }
 
-    public void drawBar(View view) {
-        Intent intent = new Intent(this, BarGraph.class);
+    public void goStats(View view) {
+        Intent intent = new Intent(this, StatsActivity.class);
         startActivity(intent);
     }
 
