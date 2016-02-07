@@ -82,6 +82,7 @@ public class DoctorMainActivity extends ActionBarActivity {
                             //Go to view patients activity
                             Intent intent = new Intent(context, ViewPatientActivity.class);
                             intent.putExtra("patient email", patientEmailList.get(position));
+                            intent.putExtra("patient name", patientsList.get(position));
                             startActivity(intent);
                         }
                     });
