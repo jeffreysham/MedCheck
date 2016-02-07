@@ -169,7 +169,7 @@ public class PieChart extends Activity {
             textPaint.setColor(0xFFC0C0C0);
             textPaint.setTextSize(35);
 
-            canvas.drawText("Completed: " + (int) values[0], (float) getWidth() / 2 - 200, ceiling - 50, textPaint);
+            canvas.drawText("Completed: " + (int) values[0], (float) getWidth() / 2 - 220, ceiling - 50, textPaint);
             canvas.drawText("Missed: " + (int)values[1], (float) getWidth()/2 + 30, ceiling - 50, textPaint);
             canvas.drawText("Percent: " + 100*values[0]/(values[0] + values[1]) + "%", (float) getWidth()/2 - 100, ceiling - 15, textPaint);
 
