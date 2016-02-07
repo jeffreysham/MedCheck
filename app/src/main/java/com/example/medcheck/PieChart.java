@@ -63,7 +63,7 @@ public class PieChart extends Activity {
                     int i = 0;
                     for (DataSnapshot stat : dataSnapshot.child("taskList").getChildren()) {
 
-                        values[i] = (int)stat.child("statistic").getValue();
+                        values[i] = Integer.parseInt(stat.child("statistic").getValue()+"");
                         i++;
                     }
                     RelativeLayout pie = (RelativeLayout) findViewById(R.id.pie);

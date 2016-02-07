@@ -59,8 +59,8 @@ public class BarGraph extends Activity {
 
                     float[] statisticValues = new float[(int) dataSnapshot.getChildrenCount()];
                     int i = 0;
-                    for (DataSnapshot stat : dataSnapshot.getChildren()) {
-                        statisticValues[i] = (int) stat.child("statistic").getValue();
+                    for (DataSnapshot stat : dataSnapshot.child("taskList").getChildren()) {
+                        statisticValues[i] = (int) Integer.parseInt(stat.child("statistic").getValue()+"");
                         i++;
                     }
                     int day = Integer.parseInt(dataSnapshot.child("day").getValue() + "");
@@ -70,7 +70,7 @@ public class BarGraph extends Activity {
                     int mins = Integer.parseInt(dataSnapshot.child("mins").getValue() + "");
                     String date = month + "/" + day + "/" + year + "/" + hour + "/" + mins;
 
-                    for (int j = 0; i < statisticValues.length; j++) {
+                    for (int j = 0; j < statisticValues.length; j++) {
                         TaskIndividual taskIndividual = new TaskIndividual(taskName, date, (int) statisticValues[j]);
                         tasks.add(taskIndividual);
                     }
