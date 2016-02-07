@@ -12,8 +12,9 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Patient Name"
+        style="@style/Header"
         android:id="@+id/textView3"
-        android:layout_marginTop="45dp"
+        android:layout_marginTop="10dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 

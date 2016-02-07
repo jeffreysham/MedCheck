@@ -52,13 +52,13 @@ public class AgendaActivity extends ActionBarActivity {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setTitle("Enter Task Information")
                 .setMessage("Did you " + taskIndividual.getName() + "?")
-                .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                .setNegativeButton("YES", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         taskIndividual.setStatistic(1);
                     }
                 })
-                .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                .setPositiveButton("NO", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
