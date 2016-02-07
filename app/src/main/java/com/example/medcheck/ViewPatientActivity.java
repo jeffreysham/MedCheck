@@ -119,8 +119,8 @@ public class ViewPatientActivity extends ActionBarActivity {
         ref.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Task task = dataSnapshot.getValue(Task.class);
-                tasks.add(task);
+//                Task task = dataSnapshot.getValue(Task.class);
+//                tasks.add(task);
             }
 
             @Override
