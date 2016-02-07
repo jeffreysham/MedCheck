@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
@@ -30,6 +32,8 @@ public class ViewPatientActivity extends ActionBarActivity {
     private ArrayList<Task> tasks;
     private GregorianCalendar currentCalendar;
     private String thePatientEmail;
+    private Context context = this;
+    private ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,12 +41,18 @@ public class ViewPatientActivity extends ActionBarActivity {
         setContentView(R.layout.activity_view_patient);
 
         Bundle extras = getIntent().getExtras();
+        String temppatientEmail = "";
         String patientName = "";
         if (extras != null) {
+            temppatientEmail = extras.getString("patient email");
             patientName = extras.getString("patient name");
+
         }
 
-        thePatientEmail = patientName;
+        TextView patientNameView = (TextView) findViewById(R.id.doctorViewPatientName);
+        patientNameView.setText(patientName);
+
+        thePatientEmail = temppatientEmail;
 
         currentCalendar = new GregorianCalendar();
 
@@ -54,7 +64,7 @@ public class ViewPatientActivity extends ActionBarActivity {
         ImageButton addTaskButton = (ImageButton) findViewById(R.id.addTask);
         ImageButton addNoteButton = (ImageButton) findViewById(R.id.addNote);
         final Context context = this;
-        ListView listView = (ListView) findViewById(R.id.doctorViewTasksList);
+        listView = (ListView) findViewById(R.id.doctorViewTasksList);
 
         addTaskButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,6 +78,8 @@ public class ViewPatientActivity extends ActionBarActivity {
                 final EditText monthInput = (EditText) alertView.findViewById(R.id.monthInput);
                 final EditText dayInput = (EditText) alertView.findViewById(R.id.dayInput);
                 final EditText yearInput = (EditText) alertView.findViewById(R.id.yearInput);
+                final EditText hoursInput = (EditText) alertView.findViewById(R.id.hourInput);
+                final EditText minutesInput = (EditText) alertView.findViewById(R.id.minsInput);
 
                 alert.setCancelable(false)
                         .setPositiveButton("OK",
@@ -75,14 +87,20 @@ public class ViewPatientActivity extends ActionBarActivity {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         //TODO: add to firebase
-                                        Task newTask = new Task(nameInput.getText().toString().trim(), descInput.getText().toString().trim(),0);
+                                        Task newTask = new Task(nameInput.getText().toString().trim(), descInput.getText().toString().trim(), 0);
                                         newTask.setDoctorEmail(email);
                                         newTask.setPatientEmail(thePatientEmail);
                                         TaskIndividual newTaskIndiv = new TaskIndividual(nameInput.getText().toString().trim(),
-                                                new GregorianCalendar(Integer.parseInt(yearInput.getText().toString().trim()),Integer.parseInt(monthInput.getText().toString().trim())-1,Integer.parseInt(dayInput.getText().toString().trim())));
+                                                new GregorianCalendar(Integer.parseInt(yearInput.getText().toString().trim()), Integer.parseInt(monthInput.getText().toString().trim()) - 1, Integer.parseInt(dayInput.getText().toString().trim())));
                                         newTask.getTaskList().add(newTaskIndiv);
                                         Firebase newUserRef = ref.child("tasks").child(nameInput.getText().toString().trim());
                                         newUserRef.setValue(newTask);
+
+                                        newUserRef.child("day").setValue(Integer.parseInt(dayInput.getText().toString().trim()));
+                                        newUserRef.child("month").setValue(Integer.parseInt(monthInput.getText().toString().trim()));
+                                        newUserRef.child("year").setValue(Integer.parseInt(yearInput.getText().toString().trim()));
+                                        newUserRef.child("hour").setValue(Integer.parseInt(hoursInput.getText().toString().trim()));
+                                        newUserRef.child("mins").setValue(Integer.parseInt(minutesInput.getText().toString().trim()));
 
                                         dialog.dismiss();
                                     }
@@ -99,19 +117,7 @@ public class ViewPatientActivity extends ActionBarActivity {
         });
 
         getTasks();
-        StatTaskListAdapter adapter = new StatTaskListAdapter(this, R.layout.stat_task_item, tasks);
-        listView.setAdapter(adapter);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position,
-                                    long id) {
-
-                Intent intent = new Intent(context, BarGraph.class);
-                startActivity(intent);
-
-            }
-        });
     }
 
     public void getTasks() {
@@ -120,8 +126,13 @@ public class ViewPatientActivity extends ActionBarActivity {
         ref.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Log.i("testing", "Patient Email: " + thePatientEmail);
+
                 String patientEmail = (String) dataSnapshot.child("patientEmail").getValue();
+                Log.i("testing2", "Patient Email: " + patientEmail);
+                Log.i("testing3", dataSnapshot.toString());
                 if (patientEmail.equals(thePatientEmail)) {
+
                     String taskName = (String) dataSnapshot.child("name").getValue();
                     String desc = (String) dataSnapshot.child("description").getValue();
                     String doctorEmail = (String) dataSnapshot.child("doctorEmail").getValue();
@@ -140,6 +151,19 @@ public class ViewPatientActivity extends ActionBarActivity {
                     Task task = new Task(taskName, desc, frequency, patientEmail, doctorEmail);
                     task.getTaskList().add(taskIndividual);
                     tasks.add(task);
+                    StatTaskListAdapter adapter = new StatTaskListAdapter(context, R.layout.stat_task_item, tasks);
+                    listView.setAdapter(adapter);
+
+                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position,
+                                                long id) {
+
+                            Intent intent = new Intent(context, BarGraph.class);
+                            startActivity(intent);
+
+                        }
+                    });
                 }
             }
 
