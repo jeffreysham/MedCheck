@@ -53,27 +53,24 @@ public class LoginActivity extends ActionBarActivity {
                         query.addChildEventListener(new ChildEventListener() {
                             @Override
                             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                                DataSnapshot tempShot = null;
-                                for (DataSnapshot theShot: dataSnapshot.getChildren()) {
-                                    if (theShot.getValue().equals(emailString.substring(0,emailString.indexOf(".")))) {
-                                        tempShot = theShot;
-                                        break;
+
+                                if (dataSnapshot.getKey().equals(emailString.substring(0,emailString.indexOf(".")))) {
+                                    boolean isDoctor = (boolean)dataSnapshot.child("isDoctor").getValue();
+                                    SharedPreferences preferences = context.getApplicationContext().getSharedPreferences("preferences", Context.MODE_PRIVATE);
+                                    preferences.edit().putString("name", (String)dataSnapshot.child("Name").getValue()).apply();
+                                    preferences.edit().putString("email", emailString.substring(0,emailString.indexOf("."))).apply();
+                                    Toast.makeText(context, "Logging In Complete", Toast.LENGTH_SHORT).show();
+                                    if (isDoctor) {
+                                        //Go to doctor app
+                                        Intent intent = new Intent(context, DoctorMainActivity.class);
+                                        startActivity(intent);
+                                    } else {
+                                        //Go to user app
+                                        Intent intent = new Intent(context, MainActivity.class);
+                                        startActivity(intent);
                                     }
                                 }
-                                boolean isDoctor = (boolean)tempShot.child("isDoctor").getValue();
-                                SharedPreferences preferences = context.getApplicationContext().getSharedPreferences("preferences", Context.MODE_PRIVATE);
-                                preferences.edit().putString("name", (String)tempShot.child("Name").getValue()).apply();
-                                preferences.edit().putString("email", emailString.substring(0,emailString.indexOf("."))).apply();
-                                Toast.makeText(context, "Logging In Complete", Toast.LENGTH_SHORT).show();
-                                if (isDoctor) {
-                                    //Go to doctor app
-                                    Intent intent = new Intent(context, DoctorMainActivity.class);
-                                    startActivity(intent);
-                                } else {
-                                    //Go to user app
-                                    Intent intent = new Intent(context, MainActivity.class);
-                                    startActivity(intent);
-                                }
+
                             }
 
                             @Override

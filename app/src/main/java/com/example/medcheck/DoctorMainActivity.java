@@ -1,6 +1,7 @@
 package com.example.medcheck;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.DataSetObserver;
 import android.support.v7.app.ActionBarActivity;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -44,6 +46,14 @@ public class DoctorMainActivity extends ActionBarActivity {
         patientsList = new ArrayList<>();
         getPatients(email);
 
+        ImageButton button = (ImageButton) findViewById(R.id.addPatientButton);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, AddPatientActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void getPatients(final String email) {
@@ -53,12 +63,12 @@ public class DoctorMainActivity extends ActionBarActivity {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 if (dataSnapshot.getChildrenCount() > 0) {
-                    for (DataSnapshot userSnapShot: dataSnapshot.getChildren()) {
-                        if (userSnapShot.child("Doctor Email").getValue().equals(email)){
-                            String patientName = (String)userSnapShot.child("Name").getValue();
-                            patientsList.add(patientName);
-                        }
+
+                    if (dataSnapshot.child("Doctor Email").getValue().equals(email)) {
+                        String patientName = (String)dataSnapshot.child("Name").getValue();
+                        patientsList.add(patientName);
                     }
+
                     ListAdapter adapter = new ArrayAdapter<String>(context, R.layout.patient_item, patientsList);
                     patientListView.setAdapter(adapter);
                     patientListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -91,27 +101,5 @@ public class DoctorMainActivity extends ActionBarActivity {
 
             }
         });
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_doctor_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }

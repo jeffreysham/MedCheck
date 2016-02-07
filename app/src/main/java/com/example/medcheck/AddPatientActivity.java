@@ -52,14 +52,14 @@ public class AddPatientActivity extends ActionBarActivity {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 if (dataSnapshot.getChildrenCount() > 0) {
-                    for (DataSnapshot userSnapShot: dataSnapshot.getChildren()) {
-                        String docName = (String)userSnapShot.child("Doctor Email").getValue();
-                        boolean isDoctor = (boolean) userSnapShot.child("isDoctor").getValue();
-                        if (!isDoctor && docName == null) {
-                            patientList.add((String) userSnapShot.child("Name").getValue());
-                            patientEmailList.add((String) userSnapShot.getValue());
-                        }
+
+                    String docName = (String) dataSnapshot.child("Doctor Email").getValue();
+                    boolean isDoctor = (boolean) dataSnapshot.child("isDoctor").getValue();
+                    if (!isDoctor && docName == null) {
+                        patientList.add((String) dataSnapshot.child("Name").getValue());
+                        patientEmailList.add((String) dataSnapshot.getValue());
                     }
+
                     ListAdapter adapter = new ArrayAdapter<>(context, R.layout.patient_item, patientList);
                     patientListView.setAdapter(adapter);
                     patientListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
