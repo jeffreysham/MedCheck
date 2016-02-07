@@ -27,6 +27,7 @@ import java.util.GregorianCalendar;
 public class BarGraph extends Activity {
     float values[];
     Context context = this;
+    String email;
     public void drawPie(View view) {
         Intent intent = new Intent(this, PieChart.class);
         startActivity(intent);
@@ -41,10 +42,15 @@ public class BarGraph extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bar);
         Firebase.setAndroidContext(this);
-
         SharedPreferences preferences = this.getApplicationContext().getSharedPreferences("preferences", Context.MODE_PRIVATE);
-        final String email = preferences.getString("email", "Email Here");
-        final ArrayList<TaskIndividual> tasks = new ArrayList<>();
+        Bundle extras = getIntent().getExtras();
+        String temppatientEmail = "";
+        if (extras != null) {
+            email = extras.getString("patient email");
+
+        } else {
+            email = preferences.getString("email", "Email Here");
+        }
 
         final Firebase ref = new Firebase("https://medcheck.firebaseio.com/tasks");
         ref.addChildEventListener(new ChildEventListener() {
@@ -57,10 +63,10 @@ public class BarGraph extends Activity {
                     String doctorEmail = (String) dataSnapshot.child("doctorEmail").getValue();
                     int frequency = Integer.parseInt(dataSnapshot.child("frequency").getValue() + "");
 
-                    float[] statisticValues = new float[(int) dataSnapshot.getChildrenCount()];
+                    float[] statisticValues = new float[(int) dataSnapshot.child("taskList").getChildrenCount()];
                     int i = 0;
                     for (DataSnapshot stat : dataSnapshot.child("taskList").getChildren()) {
-                        statisticValues[i] = (int) Integer.parseInt(stat.child("statistic").getValue()+"");
+                        statisticValues[i] = Integer.parseInt(stat.child("statistic").getValue()+"");
                         i++;
                     }
                     int day = Integer.parseInt(dataSnapshot.child("day").getValue() + "");
@@ -70,10 +76,14 @@ public class BarGraph extends Activity {
                     int mins = Integer.parseInt(dataSnapshot.child("mins").getValue() + "");
                     String date = month + "/" + day + "/" + year + "/" + hour + "/" + mins;
 
+                    ArrayList<TaskIndividual> tasks = new ArrayList<TaskIndividual>();
+
                     for (int j = 0; j < statisticValues.length; j++) {
                         TaskIndividual taskIndividual = new TaskIndividual(taskName, date, (int) statisticValues[j]);
                         tasks.add(taskIndividual);
                     }
+                    values = new float[tasks.size()];
+
                     for (int j = 0; j < tasks.size(); j++) {
                         values[j] = tasks.get(j).getStatistic();
                     }

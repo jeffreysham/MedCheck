@@ -136,7 +136,7 @@ public class ViewPatientActivity extends ActionBarActivity {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Log.i("testing", "Patient Email: " + thePatientEmail);
 
-                String patientEmail = (String) dataSnapshot.child("patientEmail").getValue();
+                final String patientEmail = (String) dataSnapshot.child("patientEmail").getValue();
                 Log.i("testing2", "Patient Email: " + patientEmail);
                 Log.i("testing3", dataSnapshot.toString());
                 if (patientEmail.equals(thePatientEmail)) {
@@ -168,6 +168,7 @@ public class ViewPatientActivity extends ActionBarActivity {
                                                 long id) {
 
                             Intent intent = new Intent(context, BarGraph.class);
+                            intent.putExtra("patient email", patientEmail);
                             startActivity(intent);
 
                         }

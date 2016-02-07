@@ -46,7 +46,6 @@ public class PieChart extends Activity {
         setContentView(R.layout.activity_pie);
         SharedPreferences preferences = this.getApplicationContext().getSharedPreferences("preferences", Context.MODE_PRIVATE);
         final String email = preferences.getString("email", "Email Here");
-        final ArrayList<TaskIndividual> tasks = new ArrayList<>();
 
         final Firebase ref = new Firebase("https://medcheck.firebaseio.com/tasks");
 
@@ -58,7 +57,7 @@ public class PieChart extends Activity {
                 String patientEmail = (String) dataSnapshot.child("patientEmail").getValue();
                 if (patientEmail.equals(email)) {
                     //int statistic = Integer.parseInt(dataSnapshot.child("taskList").child("0").child("statistic").getValue() + "");
-                    values = new float[(int) dataSnapshot.getChildrenCount()];
+                    values = new float[(int) dataSnapshot.child("taskList").getChildrenCount()];
                     Log.i("testing", dataSnapshot.toString());
                     int i = 0;
                     for (DataSnapshot stat : dataSnapshot.child("taskList").getChildren()) {
