@@ -23,7 +23,7 @@
         </activity>
         <activity
             android:name=".StatsActivity"
-            android:label="@string/title_activity_agenda" >
+            android:label="Statistics" >
         </activity>
         <activity android:name=".PieChart" >
         </activity>
