@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -34,11 +35,21 @@ public class ViewPatientActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_patient);
 
+        Bundle extras = getIntent().getExtras();
+        String patientName = "";
+        if (extras != null) {
+            patientName = extras.getString("patient name");
+        }
+
+        final String patientEmail = patientName;
+
         currentCalendar = new GregorianCalendar();
 
         Firebase.setAndroidContext(this);
         final Firebase ref = new Firebase("https://medcheck.firebaseio.com");
-
+        SharedPreferences preferences = this.getApplicationContext().getSharedPreferences("preferences", Context.MODE_PRIVATE);
+        String name = preferences.getString("name", "Username Here");
+        final String email = preferences.getString("email", "Email Here");
         ImageButton addTaskButton = (ImageButton) findViewById(R.id.addTask);
         ImageButton addNoteButton = (ImageButton) findViewById(R.id.addNote);
         final Context context = this;
@@ -64,6 +75,8 @@ public class ViewPatientActivity extends ActionBarActivity {
                                     public void onClick(DialogInterface dialog, int which) {
                                         //TODO: add to firebase
                                         Task newTask = new Task(nameInput.getText().toString().trim(), descInput.getText().toString().trim(),0);
+                                        newTask.setDoctorEmail(email);
+                                        newTask.setPatientEmail(patientEmail);
                                         TaskIndividual newTaskIndiv = new TaskIndividual(nameInput.getText().toString().trim(),
                                                 new GregorianCalendar(Integer.parseInt(yearInput.getText().toString().trim()),Integer.parseInt(monthInput.getText().toString().trim())-1,Integer.parseInt(dayInput.getText().toString().trim())));
                                         newTask.getTaskList().add(newTaskIndiv);
@@ -85,7 +98,7 @@ public class ViewPatientActivity extends ActionBarActivity {
         });
 
         getTasks();
-        StatTaskListAdapter adapter = new StatTaskListAdapter(this, R.layout.stat_task_item, tasks);
+        StatTaskListAdapter adapter = new StatTaskListAdapter(this, R.layout.patient_item, tasks);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -101,6 +114,7 @@ public class ViewPatientActivity extends ActionBarActivity {
     }
 
     public void getTasks() {
+        tasks = new ArrayList<>();
         final Firebase ref = new Firebase("https://medcheck.firebaseio.com/tasks");
         ref.addChildEventListener(new ChildEventListener() {
             @Override

@@ -1,6 +1,7 @@
 package com.example.medcheck;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -57,7 +58,7 @@ public class AddPatientActivity extends ActionBarActivity {
                     boolean isDoctor = (boolean) dataSnapshot.child("isDoctor").getValue();
                     if (!isDoctor && docName.length() == 0) {
                         patientList.add((String) dataSnapshot.child("Name").getValue());
-                        patientEmailList.add((String) dataSnapshot.getValue());
+                        patientEmailList.add((String) dataSnapshot.getKey());
                     }
 
                     ListAdapter adapter = new ArrayAdapter<>(context, R.layout.patient_item, patientList);
@@ -69,6 +70,8 @@ public class AddPatientActivity extends ActionBarActivity {
                             Map<String, Object> nickname = new HashMap<String, Object>();
                             nickname.put("Doctor Email", email);
                             alanRef.updateChildren(nickname);
+                            Intent intent = new Intent(context, DoctorMainActivity.class);
+                            startActivity(intent);
                         }
                     });
                 }
