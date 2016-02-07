@@ -137,13 +137,13 @@ public class CalendarActivity extends ActionBarActivity implements RobotoCalenda
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setTitle("Enter Task Information")
                 .setMessage("Did you " + taskIndividual.getName() + "?")
-                .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                .setNegativeButton("YES", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         taskIndividual.setStatistic(1);
                     }
                 })
-                .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                .setPositiveButton("CANCEL", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
