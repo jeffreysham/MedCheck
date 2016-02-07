@@ -140,16 +140,6 @@ public class MainActivity extends ActionBarActivity {
         startActivity(intent);
     }
 
-    public void drawPie(View view) {
-        Intent intent = new Intent(this, PieChart.class);
-        startActivity(intent);
-    }
-
-    public void drawBar(View view) {
-        Intent intent = new Intent(this, BarGraph.class);
-        startActivity(intent);
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
