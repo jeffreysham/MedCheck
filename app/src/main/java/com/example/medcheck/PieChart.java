@@ -67,7 +67,6 @@ public class PieChart extends Activity {
                         i++;
                     }
                     RelativeLayout pie = (RelativeLayout) findViewById(R.id.pie);
-                    values = calculateData(values);
                     pie.addView(new MyGraphview(context, values));
                 }
             }
@@ -127,9 +126,9 @@ public class PieChart extends Activity {
 
             for(int i = 0; i < raw_values.length; i++)
             {
-                if (raw_values[i] == 0){
+                if (raw_values[i] <= 0){
                     value_no++;
-                } else if (raw_values[i] == 1) {
+                } else if (raw_values[i] >= 1) {
                     value_yes++;
                 }
             }
@@ -139,6 +138,7 @@ public class PieChart extends Activity {
             int step = (255 - 218)/values.length;
 
             value_degree=new float[values.length];
+            value_degree = calculateData(values);
             COLORS = new int[values.length];
             for(int i=0;i<values.length;i++)
             {
@@ -165,11 +165,13 @@ public class PieChart extends Activity {
             //float wall = padding + ((fullWidth - 2*padding)/2) - ((diameter - (padding*2))/2);
             RectF rectf = new RectF (padding, padding + ceiling, diameter - padding, diameter - padding + ceiling);
             Paint textPaint = new Paint();
-            textPaint.setColor(0xFFC5C5C5);
-            textPaint.setTextSize(140);
+            textPaint.setColor(0xFFC0C0C0);
+            textPaint.setTextSize(35);
 
-            canvas.drawText("Completed: " + values[0], 60, getWidth() - 100, textPaint);
-            canvas.drawText("Missed: " + values[1], 60, getWidth() - 1, textPaint);
+            canvas.drawText("Completed: " + (int) values[0], (float) getWidth() / 2 - 200, ceiling - 50, textPaint);
+            canvas.drawText("Missed: " + (int)values[1], (float) getWidth()/2 + 30, ceiling - 50, textPaint);
+            canvas.drawText("Percent: " + 100*values[0]/(values[0] + values[1]) + "%", (float) getWidth()/2 - 100, ceiling - 15, textPaint);
+
 
             for (int i = 0; i < value_degree.length; i++) {//values2.length; i++) {
                 if (i == 0) {
