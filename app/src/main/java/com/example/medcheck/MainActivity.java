@@ -77,6 +77,8 @@ public class MainActivity extends ActionBarActivity {
         }
         AccutanePills.setTaskList(AccutanePillList);
 
+        final Task temp = AccutanePills;
+
         TextView mainActTaskName = (TextView) findViewById(R.id.mainActTaskName);
         mainActTaskName.setText(AccutanePills.getName());
 
@@ -85,7 +87,7 @@ public class MainActivity extends ActionBarActivity {
 
         // Already done button
         Button mainActDoneButton = (Button) findViewById(R.id.mainActDoneButton);
-        /*mainActDoneButton.setOnClickListener(new View.OnClickListener() {
+        mainActDoneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new AlertDialog.Builder(context).setTitle("Warning").setMessage("Are you sure?")
@@ -93,12 +95,12 @@ public class MainActivity extends ActionBarActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 // if yes, adjust statistic for the day. currently only day 15 of current month
-                                AccutanePills.getTaskList().get(15).setStatistic(1);
+                                temp.getTaskList().get(15).setStatistic(1);
                             }
                         })
                         .setNegativeButton("Cancel", null);
             }
-        });*/
+        });
 
         // Not today button
         Button mainActNotDoneButton = (Button) findViewById(R.id.mainActNotDoneButton);

@@ -55,7 +55,7 @@ public class AddPatientActivity extends ActionBarActivity {
 
                     String docName = (String) dataSnapshot.child("Doctor Email").getValue();
                     boolean isDoctor = (boolean) dataSnapshot.child("isDoctor").getValue();
-                    if (!isDoctor && docName == null) {
+                    if (!isDoctor && docName.length() == 0) {
                         patientList.add((String) dataSnapshot.child("Name").getValue());
                         patientEmailList.add((String) dataSnapshot.getValue());
                     }

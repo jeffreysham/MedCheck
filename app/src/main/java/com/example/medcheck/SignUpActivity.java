@@ -49,7 +49,7 @@ public class SignUpActivity extends ActionBarActivity {
                         Firebase newUserRef = ref.child("users").child(emailString.substring(0,emailString.indexOf(".")));
 
                         newUserRef.child("Name").setValue(nameText.getText().toString().trim());
-
+                        newUserRef.child("Doctor Name").setValue("");
                         if (checkBox.isChecked()) {
                             newUserRef.child("isDoctor").setValue(true);
                         } else {
