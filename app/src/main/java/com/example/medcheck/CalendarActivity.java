@@ -143,17 +143,16 @@ public class CalendarActivity extends ActionBarActivity implements RobotoCalenda
                         taskIndividual.setStatistic(1);
                     }
                 })
-                .setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        taskIndividual.setStatistic(0);
-
-                    }
-                })
-                .setNeutralButton("CANCEL", new DialogInterface.OnClickListener() {
+                .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
+                    }
+                })
+                .setNeutralButton("NO", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        taskIndividual.setStatistic(0);
                     }
                 });
         alertDialogBuilder.setCancelable(false);

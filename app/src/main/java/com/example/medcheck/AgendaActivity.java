@@ -61,14 +61,14 @@ public class AgendaActivity extends ActionBarActivity {
                 .setNegativeButton("NO", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        taskIndividual.setStatistic(0);
+                        dialog.cancel();
+
                     }
                 })
                 .setNeutralButton("CANCEL", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
-                        dialog.cancel();
+                        taskIndividual.setStatistic(0);
                     }
                 });
         alertDialogBuilder.setCancelable(false);
