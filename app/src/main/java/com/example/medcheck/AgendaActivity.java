@@ -83,7 +83,7 @@ public class AgendaActivity extends ActionBarActivity {
         temp.getTaskList().add(new TaskIndividual(temp.getName(), date2, 3));
         tasks.add(temp);
 
-        Task temp2 = new Task("Take Insulin", "Take your R insulin at least 30 mins before eating.", 0);
+        Task temp2 = new Task("Take Insulin", "Take your insulin at least 30 mins before eating.", 0);
 
         temp2.getTaskList().add(new TaskIndividual(temp2.getName(), date1, 0));
         temp2.getTaskList().add(new TaskIndividual(temp2.getName(), date2, 3));

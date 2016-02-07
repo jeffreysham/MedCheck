@@ -68,7 +68,7 @@ public class NoteActivity extends ActionBarActivity {
         temp.getTaskList().add(new TaskIndividual(temp.getName(), date1, 3));
         tasks.add(temp);
 
-        Task temp2 = new Task("Take Insulin", "Take your R insulin at least 30 mins before eating.", 0);
+        Task temp2 = new Task("Take Insulin", "Take your insulin at least 30 mins before eating.", 0);
         String date2 = "1/16/2016/12/30";
         temp2.getTaskList().add(new TaskIndividual(temp2.getName(), date2, 0));
         temp2.getTaskList().add(new TaskIndividual(temp2.getName(), date2, 3));
