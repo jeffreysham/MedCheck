@@ -32,8 +32,8 @@ public class BarGraph extends Activity {
         startActivity(intent);
     }
 
-    public void goStats(View view) {
-        Intent intent = new Intent(this, StatsActivity.class);
+    public void drawBar(View view) {
+        Intent intent = new Intent(this, BarGraph.class);
         startActivity(intent);
     }
 
@@ -41,6 +41,7 @@ public class BarGraph extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bar);
         Firebase.setAndroidContext(this);
+
         SharedPreferences preferences = this.getApplicationContext().getSharedPreferences("preferences", Context.MODE_PRIVATE);
         final String email = preferences.getString("email", "Email Here");
         final ArrayList<TaskIndividual> tasks = new ArrayList<>();
@@ -73,8 +74,6 @@ public class BarGraph extends Activity {
                         TaskIndividual taskIndividual = new TaskIndividual(taskName, date, (int) statisticValues[j]);
                         tasks.add(taskIndividual);
                     }
-
-
                 }
             }
 
@@ -95,11 +94,16 @@ public class BarGraph extends Activity {
             }
         });
 
+<<<<<<< HEAD
         for (int i=0; i < tasks.size(); i++) {
             values[i] = tasks.get(i).getStatistic();
         }
 
 
+=======
+
+        setContentView(R.layout.activity_bar);
+>>>>>>> origin/master
         RelativeLayout bar = (RelativeLayout) findViewById(R.id.bar);
         BarChart our_chart = new BarChart(this, values);
         bar.addView(our_chart);
