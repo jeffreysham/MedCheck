@@ -13,6 +13,10 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true">
         <ImageButton
+
+            android:background="@drawable/floating_button"
+            android:padding="10dp"
+            android:layout_margin="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/agenda"
@@ -21,11 +25,14 @@
             android:backgroundTint="@color/roboto_calendar_blue"/>
 
         <ImageButton
+            android:background="@drawable/floating_button"
+            android:padding="10dp"
+            android:layout_margin="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/stats"
-            android:src="@drawable/pieblue"
-            android:onClick="drawPie"
+            android:src="@drawable/stat_icon"
+            android:onClick="goStats"
             android:backgroundTint="@color/roboto_calendar_blue"/>
     </LinearLayout>
 

@@ -47,18 +47,18 @@ public class StatsActivity extends ActionBarActivity {
     }
 
     public void getTasks() {
-        Task temp = new Task("Shots shots shots, Everybody!", "Medication Counter", 0);
+        Task temp = new Task("Check insulin levels", "Make sure your insulin levels are below 30g.", 0);
         temp.getTaskList().add(new TaskIndividual(temp.getName(), currentCalendar, 0));
         temp.getTaskList().add(new TaskIndividual(temp.getName(), currentCalendar, 3));
         tasks.add(temp);
 
-        Task temp2 = new Task("Run as fast as you can.", "exercise", 0);
+        Task temp2 = new Task("Go for a run", "Target heart rate should be 150bpm", 0);
         GregorianCalendar other = new GregorianCalendar(2016, 1, 15);
         temp2.getTaskList().add(new TaskIndividual(temp2.getName(), other, 0));
         temp2.getTaskList().add(new TaskIndividual(temp2.getName(), other, 3));
         tasks.add(temp2);
 
-        Task temp3 = new Task("Nope.", "exercise", 0);
+        Task temp3 = new Task("Don't smoke", "Smoking is bad for your health", 0);
         GregorianCalendar other1 = new GregorianCalendar(2016, 1, 15);
         temp2.getTaskList().add(new TaskIndividual(temp3.getName(), other1, 0));
         temp2.getTaskList().add(new TaskIndividual(temp3.getName(), other1, 3));

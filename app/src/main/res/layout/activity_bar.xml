@@ -9,12 +9,15 @@
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:layout_alignParentTop="true"
+        android:layout_marginBottom="20dp"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true">
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/floating_button"
+            android:padding="10dp"
+            android:layout_margin="5dp"
             android:id="@+id/agenda"
             android:src="@drawable/pieblue"
             android:onClick="drawPie"
@@ -23,9 +26,12 @@
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/floating_button"
+            android:padding="10dp"
+            android:layout_margin="5dp"
             android:id="@+id/stats"
-            android:src="@drawable/barblue"
-            android:onClick="drawBar"
+            android:src="@drawable/stat_icon"
+            android:onClick="goStats"
             android:backgroundTint="@color/roboto_calendar_blue"/>
     </LinearLayout>
 

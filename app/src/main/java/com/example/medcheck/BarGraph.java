@@ -16,7 +16,7 @@ import android.app.Activity;
 import android.widget.RelativeLayout;
 
 public class BarGraph extends Activity {
-    float values[]={1, 2, 3, 2, 12, 5};
+    float values[]={1, 2, 4, 8};
 
 
     public void drawPie(View view) {
@@ -103,7 +103,7 @@ public class BarGraph extends Activity {
         protected void onDraw(Canvas canvas) {
             super.onDraw(canvas);
             int fullWidth = getWidth();
-            int fullHeight = getHeight();
+            int fullHeight = getHeight() - 225;
             int padding = (int) (10 * scaleFactor);
             int maxBarHeight = fullHeight - 10 * padding;
             float bar_height [] = new float[boxPaint.length];
@@ -130,10 +130,10 @@ public class BarGraph extends Activity {
             {
                 float barbottom = fullHeight - padding * 3;
                 float bartop = barbottom - bar_height[i];
-                float valpos = fullHeight;
+                float valpos = fullHeight - 10;
                 canvas.drawRect((1f / boxPaint.length) * i * fullWidth + padding, bartop, (1f / boxPaint.length) * (i + 1) * fullWidth - padding, barbottom, boxPaint[i]);
-                canvas.drawText("Week " + (i + 1), (1f/boxPaint.length)*i*fullWidth + 25f/boxPaint.length + padding, valpos, textPaintBox[i]);
-                canvas.drawText("Week " + (i + 1), (1f/boxPaint.length)*i*fullWidth + 25f/boxPaint.length + padding, valpos, textPaintBox[i]);
+                canvas.drawText("Week " + (i + 1), (1f / boxPaint.length) * i * fullWidth + (1f / (boxPaint.length * 2)) * fullWidth - 35, valpos, textPaintBox[i]);
+                canvas.drawText("" + values[i], (1f/boxPaint.length)*i*fullWidth + (1f/(boxPaint.length*2))*fullWidth - 15, bartop - 10, textPaintBox[i]);
             }
 
         }
