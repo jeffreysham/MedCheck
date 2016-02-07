@@ -32,12 +32,13 @@ public class BarGraph extends Activity {
         startActivity(intent);
     }
 
-    public void goStats(View view) {
-        Intent intent = new Intent(this, StatsActivity.class);
+    public void drawBar(View view) {
+        Intent intent = new Intent(this, BarGraph.class);
         startActivity(intent);
     }
 
     public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         SharedPreferences preferences = this.getApplicationContext().getSharedPreferences("preferences", Context.MODE_PRIVATE);
         final String email = preferences.getString("email", "Email Here");
         final ArrayList<TaskIndividual> tasks = new ArrayList<>();
@@ -63,7 +64,7 @@ public class BarGraph extends Activity {
 
                     TaskIndividual taskIndividual = new TaskIndividual(taskName, date, statistic);
                     tasks.add(taskIndividual);
-                    
+
                 }
             }
 
@@ -88,7 +89,7 @@ public class BarGraph extends Activity {
             }
         });
 
-        super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_bar);
         RelativeLayout bar = (RelativeLayout) findViewById(R.id.bar);
         BarChart our_chart = new BarChart(this, values);
