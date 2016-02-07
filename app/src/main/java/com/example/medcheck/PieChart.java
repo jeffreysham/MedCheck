@@ -55,11 +55,11 @@ public class PieChart extends Activity {
                 String patientEmail = (String) dataSnapshot.child("patientEmail").getValue();
                 if (patientEmail.equals(email)) {
                     //int statistic = Integer.parseInt(dataSnapshot.child("taskList").child("0").child("statistic").getValue() + "");
-
                     values = new float[(int)dataSnapshot.getChildrenCount()];
+
                     int i = 0;
-                    for (DataSnapshot stat: dataSnapshot.getChildren()) {
-                        values[i] = (int)stat.child("statistic").getValue();
+                    for (DataSnapshot stat : dataSnapshot.getChildren()) {
+                        values[i] = (int) stat.child("statistic").getValue();
                         i++;
                     }
                 }
@@ -110,12 +110,26 @@ public class PieChart extends Activity {
         DisplayMetrics metrics = getResources().getDisplayMetrics();
         float scaleFactor = metrics.density;
         int temp=0;
-        public MyGraphview(Context context, float[] values) {
+        public MyGraphview(Context context, float[] raw_values) {
 
             super(context);
             int r = 85;
             int g = 198;
             int b = 218;
+
+            int value_no = 0;
+            int value_yes = 0;
+
+            for(int i = 0; i < raw_values.length; i++)
+            {
+                if (raw_values[i] == 0){
+                    value_no++;
+                } else if (raw_values[i] == 1) {
+                    value_yes++;
+                }
+            }
+
+            float[] values = {value_yes, value_no};
 
             int step = (255 - 218)/values.length;
 
@@ -145,6 +159,12 @@ public class PieChart extends Activity {
             float ceiling = padding + ((fullHeight - 2*padding)/2) - ((diameter - (padding*2))/2);
             //float wall = padding + ((fullWidth - 2*padding)/2) - ((diameter - (padding*2))/2);
             RectF rectf = new RectF (padding, padding + ceiling, diameter - padding, diameter - padding + ceiling);
+            Paint textPaint = new Paint();
+            textPaint.setColor(0xFFC5C5C5);
+            textPaint.setTextSize(140);
+
+            canvas.drawText("Completed: " + values[0], 60, getWidth() - 100, textPaint);
+            canvas.drawText("Missed: " + values[1], 60, getWidth() - 1, textPaint);
 
             for (int i = 0; i < value_degree.length; i++) {//values2.length; i++) {
                 if (i == 0) {
