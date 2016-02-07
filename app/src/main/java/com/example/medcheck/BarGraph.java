@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 public class BarGraph extends Activity {
-    float values[] = {1, 2, 4, 8};
+    float values[];// = {1, 2, 4, 8};
 
     public void drawPie(View view) {
         Intent intent = new Intent(this, PieChart.class);
@@ -40,7 +40,7 @@ public class BarGraph extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         SharedPreferences preferences = this.getApplicationContext().getSharedPreferences("preferences", Context.MODE_PRIVATE);
         final String email = preferences.getString("email", "Email Here");
-        final ArrayList<Task> tasks = new ArrayList<>();
+        final ArrayList<TaskIndividual> tasks = new ArrayList<>();
 
         final Firebase ref = new Firebase("https://medcheck.firebaseio.com/tasks");
         ref.addChildEventListener(new ChildEventListener() {
@@ -53,7 +53,6 @@ public class BarGraph extends Activity {
                     String desc = (String) dataSnapshot.child("description").getValue();
                     String doctorEmail = (String) dataSnapshot.child("doctorEmail").getValue();
                     int frequency = Integer.parseInt(dataSnapshot.child("frequency").getValue() + "");
-
                     int statistic = Integer.parseInt(dataSnapshot.child("taskList").child("0").child("statistic").getValue() + "");
                     int day = Integer.parseInt(dataSnapshot.child("day").getValue() + "");
                     int month = Integer.parseInt(dataSnapshot.child("month").getValue() + "");
@@ -63,10 +62,8 @@ public class BarGraph extends Activity {
                     GregorianCalendar date = new GregorianCalendar(year, month, day, hour, mins);
 
                     TaskIndividual taskIndividual = new TaskIndividual(taskName, date, statistic);
-
-                    Task task = new Task(taskName, desc, frequency, patientEmail, doctorEmail);
-                    task.getTaskList().add(taskIndividual);
-                    tasks.add(task);
+                    tasks.add(taskIndividual);
+                    
                 }
             }
 
@@ -90,6 +87,7 @@ public class BarGraph extends Activity {
 
             }
         });
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bar);
         RelativeLayout bar = (RelativeLayout) findViewById(R.id.bar);
