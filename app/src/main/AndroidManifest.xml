@@ -62,8 +62,6 @@
             android:name=".ViewPatientActivity"
             android:label="@string/title_activity_view_patient" >
         </activity>
-
-
     </application>
 
 </manifest>
