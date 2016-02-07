@@ -80,10 +80,10 @@ public class MainActivity extends ActionBarActivity {
         final Task temp = AccutanePills;
 
         TextView mainActTaskName = (TextView) findViewById(R.id.mainActTaskName);
-        mainActTaskName.setText(AccutanePills.getName());
+        mainActTaskName.setText(temp.getName());
 
         TextView mainActTaskTime = (TextView) findViewById(R.id.mainActTaskTime);
-        mainActTaskTime.setText("at " + formatTime(AccutanePills.getTaskList().get(3).getDate().get(Calendar.HOUR_OF_DAY), AccutanePills.getTaskList().get(3).getDate().get(Calendar.MINUTE)));
+        mainActTaskTime.setText("at " + formatTime(temp.getTaskList().get(3).getDate().get(Calendar.HOUR_OF_DAY), temp.getTaskList().get(3).getDate().get(Calendar.MINUTE)));
 
         // Already done button
         Button mainActDoneButton = (Button) findViewById(R.id.mainActDoneButton);
@@ -98,7 +98,7 @@ public class MainActivity extends ActionBarActivity {
                                 temp.getTaskList().get(15).setStatistic(1);
                             }
                         })
-                        .setNegativeButton("Cancel", null);
+                        .setNegativeButton("Cancel", null).show();
             }
         });
 
@@ -107,9 +107,15 @@ public class MainActivity extends ActionBarActivity {
         mainActNotDoneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: Fix this
-                Intent intent = new Intent(context, CalendarActivity.class);
-                startActivity(intent);
+                new AlertDialog.Builder(context).setTitle("Warning").setMessage("Are you sure?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // if yes, adjust statistic for the day. currently only day 15 of current month
+                                temp.getTaskList().get(15).setStatistic(0);
+                            }
+                        })
+                        .setNegativeButton("Cancel", null).show();
             }
         });
     }
