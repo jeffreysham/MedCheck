@@ -93,7 +93,7 @@ public class ViewPatientActivity extends ActionBarActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position,
                                     long id) {
 
-                Intent intent = new Intent(context, MakeBar.class);
+                Intent intent = new Intent(context, BarGraph.class);
                 startActivity(intent);
 
             }
