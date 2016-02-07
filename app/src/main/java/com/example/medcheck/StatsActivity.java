@@ -26,7 +26,7 @@ public class StatsActivity extends ActionBarActivity {
         setContentView(R.layout.activity_stat);
 
         currentCalendar = new GregorianCalendar();
-        listView = (ListView) findViewById(R.id.agendaTaskList);
+        listView = (ListView) findViewById(R.id.statTaskList);
 
         tasks = new ArrayList<>();
         getTasks();

@@ -26,13 +26,14 @@ public class NoteActivity extends ActionBarActivity {
         setContentView(R.layout.activity_note);
 
         currentCalendar = new GregorianCalendar();
-        listView = (ListView) findViewById(R.id.agendaTaskList);
+        listView = (ListView) findViewById(R.id.noteTaskList);
 
         tasks = new ArrayList<>();
         getTasks();
-        StatTaskListAdapter adapter = new StatTaskListAdapter(this, R.layout.stat_task_item, tasks);
+        StatTaskListAdapter adapter = new StatTaskListAdapter(this, R.layout.note_task_item, tasks);
         listView.setAdapter(adapter);
 
+/*
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position,
@@ -43,6 +44,7 @@ public class NoteActivity extends ActionBarActivity {
 
             }
         });
+*/
 
     }
 
