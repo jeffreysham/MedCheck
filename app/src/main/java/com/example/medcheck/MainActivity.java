@@ -14,6 +14,11 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.firebase.client.ChildEventListener;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -67,94 +72,121 @@ public class MainActivity extends ActionBarActivity {
         TextView userGreetingView = (TextView) findViewById(R.id.userGreetingText);
         SharedPreferences preferences = this.getApplicationContext().getSharedPreferences("preferences", Context.MODE_PRIVATE);
         String name = preferences.getString("name", "Username Here");
+        final String email = preferences.getString("email", "Email Here");
         userGreetingView.setText("Hello, " + name);
 
-        // Dummy tasks
-        Task AccutanePills = new Task("Don't forget to:\nTake Accutane", "For Acne", 1);
-        List<TaskIndividual> AccutanePillList = new ArrayList<>();
-        for (int i=0; i<30; i++) {
-            String day = "Day " + Integer.toString(i);
-            TaskIndividual temp = new TaskIndividual(day, new GregorianCalendar(2016,2,i,1,30));
-            AccutanePillList.add(temp);
-        }
-        AccutanePills.setTaskList(AccutanePillList);
-
-        Task StopSmoking = new Task("Stop Smoking", "For smokers", 1);
-        List<TaskIndividual> SmokingList = new ArrayList<>();
-        for (int i=0; i<30; i++) {
-            String day = "Day " + Integer.toString(i);
-            TaskIndividual temp = new TaskIndividual(day, new GregorianCalendar(2016,2,i,1,30));
-            SmokingList.add(temp);
-        }
-        StopSmoking.setTaskList(SmokingList);
-
         final ArrayList<Task> tasks = new ArrayList<>();
-        tasks.add(AccutanePills);
-        tasks.add(StopSmoking);
-
-        final TextView mainActTaskName = (TextView) findViewById(R.id.mainActTaskName);
-        mainActTaskName.setText(tasks.get(0).getName());
-
-        final TextView mainActTaskTime = (TextView) findViewById(R.id.mainActTaskTime);
-        mainActTaskTime.setText("at " + formatTime(tasks.get(0).getTaskList().get(15).getDate().get(Calendar.HOUR_OF_DAY),
-                tasks.get(0).getTaskList().get(15).getDate().get(Calendar.MINUTE)));
-
-        // Already done button
-        final Button mainActDoneButton = (Button) findViewById(R.id.mainActDoneButton);
-
-        // Not today button
-        final Button mainActNotDoneButton = (Button) findViewById(R.id.mainActNotDoneButton);
-
-        // Button operations
-        mainActDoneButton.setOnClickListener(new View.OnClickListener() {
+        final Firebase ref = new Firebase("https://medcheck.firebaseio.com/tasks");
+        ref.addChildEventListener(new ChildEventListener() {
             @Override
-            public void onClick(View v) {
-                new AlertDialog.Builder(context).setTitle("Warning").setMessage("Are you sure?")
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                // if yes, adjust statistic for the day. currently only day 15 of current month
-                                tasks.get(count).getTaskList().get(15).setStatistic(1);
-                                count++;
-                                if (count == tasks.size()) {
-                                    mainActTaskName.setText("Done tasks!");
-                                    mainActTaskTime.setText("");
-                                    mainActDoneButton.setEnabled(false);
-                                    mainActNotDoneButton.setEnabled(false);
-                                } else {
-                                    mainActTaskName.setText(tasks.get(count).getName());
-                                    mainActTaskTime.setText("at " + formatTime(tasks.get(count).getTaskList().get(15).getDate().get(Calendar.HOUR_OF_DAY),
-                                            tasks.get(count).getTaskList().get(15).getDate().get(Calendar.MINUTE)));
-                                }
-                            }
-                        })
-                        .setNegativeButton("Cancel", null).show();
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+                String patientEmail = (String) dataSnapshot.child("patientEmail").getValue();
+                if (patientEmail.equals(email)) {
+                    String taskName = (String) dataSnapshot.child("name").getValue();
+                    String desc = (String) dataSnapshot.child("description").getValue();
+                    String doctorEmail = (String) dataSnapshot.child("doctorEmail").getValue();
+                    int frequency = Integer.parseInt(dataSnapshot.child("frequency").getValue() + "");
+
+                    int statistic = Integer.parseInt(dataSnapshot.child("taskList").child("0").child("statistic").getValue() + "");
+                    int day = Integer.parseInt(dataSnapshot.child("day").getValue() + "");
+                    int month = Integer.parseInt(dataSnapshot.child("month").getValue() + "");
+                    int year = Integer.parseInt(dataSnapshot.child("year").getValue() + "");
+                    int hour = Integer.parseInt(dataSnapshot.child("hour").getValue() + "");
+                    int mins = Integer.parseInt(dataSnapshot.child("mins").getValue() + "");
+                    GregorianCalendar date = new GregorianCalendar(year, month, day, hour, mins);
+
+                    TaskIndividual taskIndividual = new TaskIndividual(taskName, date, statistic);
+
+                    Task task = new Task(taskName, desc, frequency, patientEmail, doctorEmail);
+                    task.getTaskList().add(taskIndividual);
+                    tasks.add(task);
+
+                    final TextView mainActTaskName = (TextView) findViewById(R.id.mainActTaskName);
+                    mainActTaskName.setText(tasks.get(0).getName());
+
+                    final TextView mainActTaskTime = (TextView) findViewById(R.id.mainActTaskTime);
+                    mainActTaskTime.setText("at " + formatTime(tasks.get(0).getTaskList().get(0).getDate().get(Calendar.HOUR_OF_DAY),
+                            tasks.get(0).getTaskList().get(0).getDate().get(Calendar.MINUTE)));
+
+                    // Already done button
+                    final Button mainActDoneButton = (Button) findViewById(R.id.mainActDoneButton);
+
+                    // Not today button
+                    final Button mainActNotDoneButton = (Button) findViewById(R.id.mainActNotDoneButton);
+
+                    // Button operations
+                    mainActDoneButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            new AlertDialog.Builder(context).setTitle("Warning").setMessage("Are you sure?")
+                                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            tasks.get(count).getTaskList().get(0).setStatistic(1);
+                                            count++;
+                                            if (count == tasks.size()) {
+                                                mainActTaskName.setText("Done tasks!");
+                                                mainActTaskTime.setText("");
+                                                mainActDoneButton.setEnabled(false);
+                                                mainActNotDoneButton.setEnabled(false);
+                                            } else {
+                                                mainActTaskName.setText(tasks.get(count).getName());
+                                                mainActTaskTime.setText("at " + formatTime(tasks.get(count).getTaskList().get(0).getDate().get(Calendar.HOUR_OF_DAY),
+                                                        tasks.get(count).getTaskList().get(0).getDate().get(Calendar.MINUTE)));
+                                            }
+                                        }
+                                    })
+                                    .setNegativeButton("Cancel", null).show();
+                        }
+                    });
+
+                    mainActNotDoneButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            new AlertDialog.Builder(context).setTitle("Warning").setMessage("Are you sure?")
+                                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            // if yes, adjust statistic for the day. currently only day 1 of current month
+                                            tasks.get(count).getTaskList().get(0).setStatistic(0);
+                                            count++;
+                                            if (count == tasks.size()) {
+                                                mainActTaskName.setText("Done tasks!");
+                                                mainActTaskTime.setText("");
+                                                mainActDoneButton.setEnabled(false);
+                                                mainActNotDoneButton.setEnabled(false);
+                                            } else {
+                                                mainActTaskName.setText(tasks.get(count).getName());
+                                                mainActTaskTime.setText("at " + formatTime(tasks.get(count).getTaskList().get(0).getDate().get(Calendar.HOUR_OF_DAY),
+                                                        tasks.get(count).getTaskList().get(0).getDate().get(Calendar.MINUTE)));
+                                            }
+                                        }
+                                    })
+                                    .setNegativeButton("Cancel", null).show();
+                        }
+                    });
+                }
             }
-        });
 
-        mainActNotDoneButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                new AlertDialog.Builder(context).setTitle("Warning").setMessage("Are you sure?")
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                // if yes, adjust statistic for the day. currently only day 15 of current month
-                                tasks.get(count).getTaskList().get(15).setStatistic(0);
-                                count++;
-                                if (count == tasks.size()) {
-                                    mainActTaskName.setText("Done tasks!");
-                                    mainActTaskTime.setText("");
-                                    mainActDoneButton.setEnabled(false);
-                                    mainActNotDoneButton.setEnabled(false);
-                                } else {
-                                    mainActTaskName.setText(tasks.get(count).getName());
-                                    mainActTaskTime.setText("at " + formatTime(tasks.get(count).getTaskList().get(15).getDate().get(Calendar.HOUR_OF_DAY),
-                                            tasks.get(count).getTaskList().get(15).getDate().get(Calendar.MINUTE)));
-                                }
-                            }
-                        })
-                        .setNegativeButton("Cancel", null).show();
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
             }
         });
     }

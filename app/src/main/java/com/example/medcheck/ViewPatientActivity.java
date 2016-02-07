@@ -29,6 +29,7 @@ public class ViewPatientActivity extends ActionBarActivity {
 
     private ArrayList<Task> tasks;
     private GregorianCalendar currentCalendar;
+    private String thePatientEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +42,7 @@ public class ViewPatientActivity extends ActionBarActivity {
             patientName = extras.getString("patient name");
         }
 
-        final String patientEmail = patientName;
+        thePatientEmail = patientName;
 
         currentCalendar = new GregorianCalendar();
 
@@ -76,7 +77,7 @@ public class ViewPatientActivity extends ActionBarActivity {
                                         //TODO: add to firebase
                                         Task newTask = new Task(nameInput.getText().toString().trim(), descInput.getText().toString().trim(),0);
                                         newTask.setDoctorEmail(email);
-                                        newTask.setPatientEmail(patientEmail);
+                                        newTask.setPatientEmail(thePatientEmail);
                                         TaskIndividual newTaskIndiv = new TaskIndividual(nameInput.getText().toString().trim(),
                                                 new GregorianCalendar(Integer.parseInt(yearInput.getText().toString().trim()),Integer.parseInt(monthInput.getText().toString().trim())-1,Integer.parseInt(dayInput.getText().toString().trim())));
                                         newTask.getTaskList().add(newTaskIndiv);
@@ -119,8 +120,27 @@ public class ViewPatientActivity extends ActionBarActivity {
         ref.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-//                Task task = dataSnapshot.getValue(Task.class);
-//                tasks.add(task);
+                String patientEmail = (String) dataSnapshot.child("patientEmail").getValue();
+                if (patientEmail.equals(thePatientEmail)) {
+                    String taskName = (String) dataSnapshot.child("name").getValue();
+                    String desc = (String) dataSnapshot.child("description").getValue();
+                    String doctorEmail = (String) dataSnapshot.child("doctorEmail").getValue();
+                    int frequency = Integer.parseInt(dataSnapshot.child("frequency").getValue() + "");
+
+                    int statistic = Integer.parseInt(dataSnapshot.child("taskList").child("0").child("statistic").getValue() + "");
+                    int day = Integer.parseInt(dataSnapshot.child("day").getValue() + "");
+                    int month = Integer.parseInt(dataSnapshot.child("month").getValue() + "");
+                    int year = Integer.parseInt(dataSnapshot.child("year").getValue() + "");
+                    int hour = Integer.parseInt(dataSnapshot.child("hour").getValue() + "");
+                    int mins = Integer.parseInt(dataSnapshot.child("mins").getValue() + "");
+                    GregorianCalendar date = new GregorianCalendar(year, month, day, hour, mins);
+
+                    TaskIndividual taskIndividual = new TaskIndividual(taskName, date, statistic);
+
+                    Task task = new Task(taskName, desc, frequency, patientEmail, doctorEmail);
+                    task.getTaskList().add(taskIndividual);
+                    tasks.add(task);
+                }
             }
 
             @Override
