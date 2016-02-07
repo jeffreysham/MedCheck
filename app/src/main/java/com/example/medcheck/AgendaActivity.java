@@ -78,13 +78,14 @@ public class AgendaActivity extends ActionBarActivity {
     public void getDates() {
         Task temp = new Task("Exercise ", "Get 30 minutes of aerobic exercise a day.", 0);
         String date1 = "1/13/2016/12/30";
+        String date2 = "1/16/2016/12/30";
         temp.getTaskList().add(new TaskIndividual(temp.getName(), date1, 0));
-        temp.getTaskList().add(new TaskIndividual(temp.getName(), date1, 3));
+        temp.getTaskList().add(new TaskIndividual(temp.getName(), date2, 3));
         tasks.add(temp);
 
         Task temp2 = new Task("Take Insulin", "Take your R insulin at least 30 mins before eating.", 0);
-        String date2 = "1/16/2016/12/30";
-        temp2.getTaskList().add(new TaskIndividual(temp2.getName(), date2, 0));
+
+        temp2.getTaskList().add(new TaskIndividual(temp2.getName(), date1, 0));
         temp2.getTaskList().add(new TaskIndividual(temp2.getName(), date2, 3));
         tasks.add(temp2);
     }

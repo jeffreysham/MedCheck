@@ -46,6 +46,7 @@ public class PieChart extends Activity {
         setContentView(R.layout.activity_pie);
         SharedPreferences preferences = this.getApplicationContext().getSharedPreferences("preferences", Context.MODE_PRIVATE);
         final String email = preferences.getString("email", "Email Here");
+        Firebase.setAndroidContext(this);
 
         final Firebase ref = new Firebase("https://medcheck.firebaseio.com/tasks");
 

@@ -28,8 +28,8 @@ public class BarGraph extends Activity {
     float values[];
     Context context = this;
     String email;
-    public void drawPie(View view) {
-        Intent intent = new Intent(this, PieChart.class);
+    public void goStats(View view) {
+        Intent intent = new Intent(this, StatsActivity.class);
         startActivity(intent);
     }
 
