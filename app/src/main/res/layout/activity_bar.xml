@@ -33,7 +33,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Tasks Completed by Week"
+        style="@style/Header"
+        android:text="Weekly Tracking"
         android:id="@+id/userGreetingText"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />

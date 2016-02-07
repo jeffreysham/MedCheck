@@ -8,6 +8,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Add Patient"
+        style="@style/Header"
         android:gravity="center"/>
     <ListView
         android:layout_width="match_parent"

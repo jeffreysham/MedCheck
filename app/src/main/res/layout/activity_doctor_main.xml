@@ -18,11 +18,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
+        style="@style/Header"
         android:text="Patients"
         android:id="@+id/textView2"
         android:layout_below="@+id/userGreetingText"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="65dp" />
+        android:layout_marginTop="30dp" />
 
     <ListView
         android:layout_width="wrap_content"
