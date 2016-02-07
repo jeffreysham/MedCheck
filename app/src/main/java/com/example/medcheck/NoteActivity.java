@@ -44,30 +44,11 @@ public class NoteActivity extends ActionBarActivity {
     }
 
     private void handleItemClick(ListView l, View v, int position, long id) {
-        final TaskIndividual taskIndividual = (TaskIndividual) l.getItemAtPosition(position);
+        final Task task = (Task) l.getItemAtPosition(position);
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setTitle("Enter Task Information")
-                .setMessage("Did you " + taskIndividual.getName() + "?")
-                .setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        taskIndividual.setStatistic(1);
-                    }
-                })
-                .setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-
-                    }
-                })
-                .setNeutralButton("CANCEL", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        taskIndividual.setStatistic(0);
-                    }
-                });
+        alertDialogBuilder.setTitle(task.getName())
+                .setMessage(task.getDescription());
         alertDialogBuilder.setCancelable(false);
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
