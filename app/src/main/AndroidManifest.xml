@@ -51,6 +51,10 @@
             android:label="@string/title_activity_doctor_main" >
         </activity>
         <activity
+            android:name=".NoteActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
             android:name=".AddPatientActivity"
             android:label="@string/title_activity_add_patient" >
         </activity>
